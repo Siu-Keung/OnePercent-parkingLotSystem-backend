@@ -34,5 +34,5 @@ logging:
         web: DEBUG
       hibernate: ERROR
 server:
-  port: 8080
+  port: 1234
 
