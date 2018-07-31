@@ -35,6 +35,7 @@ public class LoginController {
 
     @PostMapping("/auth/login")
     public String login(@RequestBody LoginDTO loginDTO, HttpServletResponse httpResponse) throws Exception{
+        httpResponse.addHeader("Access-Control-Allow-Origin", "*");
         //通过用户名和密码创建一个 Authentication 认证对象，实现类为 UsernamePasswordAuthenticationToken
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword());
         //如果认证对象不为空
