@@ -35,9 +35,14 @@ public class LoginController {
 
     @PostMapping("/auth/login")
     public String login(@RequestBody LoginDTO loginDTO, HttpServletResponse httpResponse) throws Exception{
-        httpResponse.addHeader("Access-Control-Allow-Origin", "*");
-        httpResponse.addHeader("Access-Control-Allow-Methods", "*");
-        httpResponse.addHeader("Access-Control-Allow-Headers", "Content-Type");
+        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
+        httpResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE,PUT");
+        httpResponse.setHeader("Access-Control-Max-Age", "3600");
+        httpResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with,Authorization,Content-Type");
+        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+
+
+
         //通过用户名和密码创建一个 Authentication 认证对象，实现类为 UsernamePasswordAuthenticationToken
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword());
         //如果认证对象不为空
