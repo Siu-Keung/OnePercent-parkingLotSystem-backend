@@ -12,7 +12,7 @@ public class TestController {
 
     @RequestMapping("/")
     public String sayHello(){
-        return "欢迎使用！";
+        return "欢迎使用停车场管理系统！";
     }
 
 }
