@@ -45,21 +45,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 //关闭CSRF、CORS
                 .cors().disable()
-                .csrf().disable()
+                .csrf().disable();
                 //由于使用Token，所以不需要Session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                //验证Http请求
-                .authorizeRequests()
-                //允许所有用户访问首页 与 登录
-                .antMatchers("/", "/auth/login").permitAll()
-                //其它任何请求都要经过认证通过
-                .anyRequest().authenticated()
-                //用户页面需要用户权限
-                .antMatchers("/userpage").hasAnyRole("USER")
-                .and()
-                //设置登出
-                .logout().permitAll();
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                //验证Http请求
+//                .authorizeRequests()
+//                //允许所有用户访问首页 与 登录
+//                .antMatchers("/", "/auth/login").permitAll()
+//                //其它任何请求都要经过认证通过
+//                .anyRequest().authenticated()
+//                //用户页面需要用户权限
+//                .antMatchers("/userpage").hasAnyRole("USER")
+//                .and()
+//                //设置登出
+//                .logout().permitAll();
         //添加JWT filter 在
         http
                 .addFilterBefore(genericFilterBean(), UsernamePasswordAuthenticationFilter.class);

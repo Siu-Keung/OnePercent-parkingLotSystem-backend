@@ -20,14 +20,3 @@ id bigint auto_increment primary key,
 user_id bigint,
 role_id bigint
 );
-
-
-
-create table parking_lot(
-id bigint auto_increment primary key,
-name varchar(50),
-total_size int,
-spare_size int,
-available bool,
-coordinator_id bigint
-);
