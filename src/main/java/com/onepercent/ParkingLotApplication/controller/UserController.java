@@ -29,11 +29,11 @@ public class UserController {
     public Optional<User> findUsers(@PathVariable String type, @PathVariable String content) {
         return userService.findUsers(type,content);
     }
-//
-//    @PostMapping("/users")
-//    public User save(@RequestBody User user){
-//        return userService.save(user);
-//    }
+
+    @PostMapping("/users")
+    public User save(@RequestBody User user){
+        return userService.save(user);
+    }
 //
 //    @PutMapping("/users/{id}")
 //    public User update(@PathVariable int id,@RequestBody User user){

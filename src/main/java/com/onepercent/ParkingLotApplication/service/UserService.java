@@ -53,10 +53,10 @@ public class UserService {
 
         return users;
     }
-//
-//    public User save(User user) {
-//        return userRepository.save(user);
-//    }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 //
 //    public User update(int id, User user) {
 //        User oldUser=userRepository.findById(id).get();
