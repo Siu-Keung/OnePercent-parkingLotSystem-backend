@@ -1,6 +1,7 @@
 package com.onepercent.ParkingLotApplication.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Dylan Wei
@@ -16,9 +17,9 @@ public class ParkingLot {
     private Integer spareSize;
     private Boolean available;
 
-    @ManyToOne
+    @ManyToOne(cascade = {})
     @JoinColumn(name = "coordinator_id")
-    private User user;
+    private User coordinator;
 
     public ParkingLot(){
 
@@ -79,11 +80,24 @@ public class ParkingLot {
         this.available = available;
     }
 
-    public User getUser() {
-        return user;
+    public User getCoordinator() {
+        return coordinator;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCoordinator(User coordinator) {
+        this.coordinator = coordinator;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ParkingLot)) return false;
+        ParkingLot that = (ParkingLot) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
