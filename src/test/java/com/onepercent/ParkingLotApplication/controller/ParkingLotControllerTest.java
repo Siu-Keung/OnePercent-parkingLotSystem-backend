@@ -19,9 +19,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -94,6 +96,26 @@ public class ParkingLotControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void should_get_parkinglots_paging() throws Exception {
+        List<ParkingLot> list = new ArrayList<>();
+        when(this.parkingLotService.getParkingLotsPaging(any())).thenReturn(list);
+
+        mockMvc.perform(
+                get(prefix + "?page=" + 1 + "&size=" + 9)
+        ).andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(list)));
+    }
+
+    @Test
+    public void should_get_404_when_page_out_of_range() throws Exception {
+        doThrow(ResourceNotFoundException.class).when(this.parkingLotService).getParkingLotsPaging(any());
+
+        mockMvc.perform(
+                get(prefix + "?page=" + 1 + "&size=" + 2)
+        ).andExpect(status().isNotFound());
+
+    }
 
 
 
