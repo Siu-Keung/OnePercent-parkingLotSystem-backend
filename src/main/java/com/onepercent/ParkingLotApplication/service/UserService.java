@@ -4,6 +4,7 @@ import com.onepercent.ParkingLotApplication.domain.Role;
 import com.onepercent.ParkingLotApplication.domain.User;
 import com.onepercent.ParkingLotApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,8 +38,8 @@ public class UserService {
                     users=userRepository.findById(id);
                 }
             }
-            case "name":{
-                users=userRepository.findByName(content);
+            case "userName":{
+                users=userRepository.findByUserName(content);
             }
 
             case "email":{
@@ -72,10 +73,19 @@ public class UserService {
             user.setRoles(roles);
 
         }
-        user.setLoginName(randomloginName);
+        user.setName(randomloginName);
         user.setPassword(randomPassword);
         user.setLoginFlag("1");
-        userRepository.save(user);
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        User newUser=new User();
+        newUser.setName(randomloginName);
+        newUser.setUserName(user.getUserName());
+        newUser.setPassword(bCryptPasswordEncoder.encode(randomPassword));
+        newUser.setEmail(user.getEmail());
+        newUser.setPhone(user.getPhone());
+        newUser.setLoginFlag(user.getLoginFlag());
+        newUser.setRoles(user.getRoles());
+        userRepository.save(newUser);
         return user;
     }
 

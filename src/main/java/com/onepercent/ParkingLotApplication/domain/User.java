@@ -2,15 +2,14 @@ package com.onepercent.ParkingLotApplication.domain;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Random;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String loginName;
-    private String name;
+    private String name;//登录名
+    private String userName;//用户真实名字
     private String password;
     private String email;
     private String phone;
@@ -23,12 +22,12 @@ public class User {
     public User() {
     }
 
-    public String getLoginName() {
-        return loginName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
