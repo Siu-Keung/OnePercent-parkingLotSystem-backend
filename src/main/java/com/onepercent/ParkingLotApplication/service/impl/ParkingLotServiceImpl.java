@@ -38,7 +38,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     @Override
     public List<ParkingLot> getParkingLotsPaging(PageRequest pageRequest) throws ResourceNotFoundException {
         Page<ParkingLot> parkingLots = this.parkingLotRepository.findAll(pageRequest);
-        if (parkingLots.getNumber() == 0)
+        if (parkingLots.getTotalElements() == 0)
             throw new ResourceNotFoundException("所选页码超出范围！");
         return parkingLots.getContent();
     }

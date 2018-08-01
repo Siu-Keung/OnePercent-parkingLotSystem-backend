@@ -17,7 +17,7 @@ public class ParkingLot {
     private Integer spareSize;
     private Boolean available;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coordinator_id")
     private User coordinator;
 
