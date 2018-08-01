@@ -42,6 +42,6 @@ public class LoginController {
        String token=tokenAndRole.split(" ")[0];
        String role=tokenAndRole.split(" ")[1];
        httpResponse.addHeader(WebSecurityConfig.AUTHORIZATION_HEADER,"Bearer "+token);
-        return role;
+        return tokenAndRole;
     }
 }
