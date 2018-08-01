@@ -1,6 +1,7 @@
 package com.onepercent.ParkingLotApplication.service;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
+import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +17,9 @@ public interface ParkingLotService {
     ParkingLot getParkingLotById(Long id) throws ResourceNotFoundException;
 
     List<ParkingLot> getParkingLotsPaging(PageRequest pageRequest) throws ResourceNotFoundException;
+
+    void updateParkingLot(ParkingLot parkingLot) throws ResourceNotFoundException, OperationNotAllowedException;
+
+
 
 }

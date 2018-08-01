@@ -2,6 +2,7 @@ package com.onepercent.ParkingLotApplication.repository;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,6 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
-
 
 }

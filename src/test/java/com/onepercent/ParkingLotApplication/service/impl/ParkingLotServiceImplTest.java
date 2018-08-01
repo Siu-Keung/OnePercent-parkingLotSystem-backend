@@ -1,6 +1,8 @@
 package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
+import com.onepercent.ParkingLotApplication.domain.User;
+import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
 import org.hamcrest.CoreMatchers;
@@ -10,6 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +25,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Dylan Wei
@@ -77,6 +78,7 @@ public class ParkingLotServiceImplTest {
         Page page = mock(Page.class);
 
         when(this.repository.findAll(any(Pageable.class))).thenReturn(page);
+        when(page.getNumber()).thenReturn(2);
         when(page.getContent()).thenReturn(list);
 
         List<ParkingLot> resultList = this.parkingLotService.getParkingLotsPaging(PageRequest.of(1, 2));
@@ -95,6 +97,39 @@ public class ParkingLotServiceImplTest {
         expectedException.expect(ResourceNotFoundException.class);
         List<ParkingLot> resultList = this.parkingLotService.getParkingLotsPaging(PageRequest.of(1, 2));
     }
+
+    @Test
+    public void should_update_parking_lot_successfully(){
+        Optional<ParkingLot> optional = Optional.of(mock(ParkingLot.class));
+        when(repository.findById(anyLong())).thenReturn(optional);
+        this.parkingLotService.updateParkingLot(mock(ParkingLot.class));
+
+        verify(this.repository).save(any(ParkingLot.class));
+    }
+
+    @Test
+    public void should_throw_NOT_FOUND_exception_given_id_not_exists(){
+        when(this.repository.existsById(anyLong())).thenReturn(false);
+
+        expectedException.expect(ResourceNotFoundException.class);
+        this.parkingLotService.updateParkingLot(mock(ParkingLot.class));
+    }
+
+    @Test
+    public void should_throw_NOT_ALLOWED_exception_given_parking_lot_have_car_or_coordinator(){
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.setId(1L);
+        parkingLot.setCoordinator(new User());
+        parkingLot.setTotalSize(100);
+        parkingLot.setSpareSize(99);
+        Optional<ParkingLot> optional = Optional.of(parkingLot);
+
+        when(this.repository.findById(anyLong())).thenReturn(optional);
+
+        expectedException.expect(OperationNotAllowedException.class);
+        this.parkingLotService.updateParkingLot(mock(ParkingLot.class));
+    }
+
 
 
 }
