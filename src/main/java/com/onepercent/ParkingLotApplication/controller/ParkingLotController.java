@@ -48,4 +48,11 @@ public class ParkingLotController {
         return this.parkingLotService.getParkingLotsPaging(PageRequest.of(page, size));
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping("/{id}")
+    public void updateParkingLot(
+            @RequestBody ParkingLot parkingLot){
+        this.parkingLotService.updateParkingLot(parkingLot);
+    }
+
 }

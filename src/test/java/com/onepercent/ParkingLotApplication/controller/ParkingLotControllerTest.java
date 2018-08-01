@@ -118,5 +118,35 @@ public class ParkingLotControllerTest {
     }
 
 
+    @Test
+    public void should_get_403_when_udpate_failed() throws Exception {
+        doThrow(OperationNotAllowedException.class).when(this.parkingLotService)
+                .updateParkingLot(any());
+
+        mockMvc.perform(patch(prefix + anyInt())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(mapper.writeValueAsString(new ParkingLot())))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void should_get_404_when_id_not_exists() throws Exception {
+        doThrow(ResourceNotFoundException.class).when(this.parkingLotService)
+                .updateParkingLot(any());
+
+        mockMvc.perform(patch(prefix + anyInt())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(mapper.writeValueAsString(new ParkingLot())))
+
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void should_get_204_when_udpate_successfully() throws Exception {
+        mockMvc.perform(patch(prefix + anyInt())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(mapper.writeValueAsString(new ParkingLot())))
+                .andExpect(status().isNoContent());
+    }
 
 }
