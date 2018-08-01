@@ -92,7 +92,7 @@ public class UserService {
 
     public User update(int id, User user) throws ResourceNotFoundException {
         User oldUser=userRepository.findById(id).get();
-        if (oldUser==null) throw new ResourceNotFoundException("用户不存在！");;
+        if (oldUser==null) throw new ResourceNotFoundException("用户不存在！");
         if (user.getName()!=null)
             oldUser.setName(user.getName());
         if(user.getEmail()!=null)
@@ -107,4 +107,11 @@ public class UserService {
         return oldUser;
     }
 
+    public Boolean freezeAccount(int id) {
+        User user=userRepository.findById(id).get();
+        if (user==null) throw new ResourceNotFoundException("用户不存在！");
+        user.setLoginFlag("0");
+        userRepository.save(user);
+        return true;
+    }
 }

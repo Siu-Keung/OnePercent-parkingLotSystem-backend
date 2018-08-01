@@ -43,4 +43,9 @@ public class UserController {
         return new UserDTO(newUser);
     }
 
+    @PatchMapping("/users/{id}")
+    public Boolean  freezeAccount(@PathVariable int id){
+        return userService.freezeAccount(id);
+    }
+
 }
