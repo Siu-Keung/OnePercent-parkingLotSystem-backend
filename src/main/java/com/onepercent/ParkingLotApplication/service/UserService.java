@@ -2,6 +2,7 @@ package com.onepercent.ParkingLotApplication.service;
 
 import com.onepercent.ParkingLotApplication.domain.Role;
 import com.onepercent.ParkingLotApplication.domain.User;
+import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -89,9 +90,9 @@ public class UserService {
         return user;
     }
 
-    public User update(int id, User user) {
+    public User update(int id, User user) throws ResourceNotFoundException {
         User oldUser=userRepository.findById(id).get();
-        if (oldUser==null) return null;
+        if (oldUser==null) throw new ResourceNotFoundException("用户不存在！");;
         if (user.getName()!=null)
             oldUser.setName(user.getName());
         if(user.getEmail()!=null)

@@ -1,6 +1,7 @@
 package com.onepercent.ParkingLotApplication.controller;
 
 import com.onepercent.ParkingLotApplication.domain.User;
+import com.onepercent.ParkingLotApplication.dto.UserDTO;
 import com.onepercent.ParkingLotApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +32,15 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User save(@RequestBody User user){
-        return userService.save(user);
+    public UserDTO save(@RequestBody User user){
+        User newUser=userService.save(user);
+        return new UserDTO(newUser);
     }
 
     @PutMapping("/users/{id}")
-    public User update(@PathVariable int id,@RequestBody User user){
-        return userService.update(id,user);
+    public UserDTO update(@PathVariable int id,@RequestBody User user){
+        User newUser= userService.update(id,user);
+        return new UserDTO(newUser);
     }
 
 }
