@@ -43,4 +43,9 @@ public class UserController {
         return new UserDTO(newUser);
     }
 
+    @PatchMapping("/users/{id}")
+    public String  changeAccountStatus(@PathVariable int id){
+        return userService.changeAccountStatus(id);
+    }
+
 }
