@@ -4,6 +4,7 @@ import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,7 +21,6 @@ public class ParkingLotController {
         this.parkingLotService = parkingLotService;
     }
 
-
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping
     public void addParkingLot(
@@ -28,6 +28,9 @@ public class ParkingLotController {
         this.parkingLotService.addParkingLot(parkingLot);
     }
 
-
+    @GetMapping("/{id}")
+    public ParkingLot getParkingLotById(@PathVariable Long id){
+        return this.parkingLotService.getParkingLotById(id);
+    }
 
 }

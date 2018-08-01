@@ -5,7 +5,7 @@ package com.onepercent.ParkingLotApplication.exception;
  * @date 2018-08-01 11:23
  */
 public class ResourceNotFoundException extends RuntimeException{
-    private static final String defaultMessage = "请求资源不存在！";
+    private static final String defaultMessage = "请求资源不存在";
 
     public ResourceNotFoundException(){
         super(defaultMessage);

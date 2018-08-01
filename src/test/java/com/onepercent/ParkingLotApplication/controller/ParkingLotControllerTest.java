@@ -1,9 +1,11 @@
 package com.onepercent.ParkingLotApplication.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onepercent.ParkingLotApplication.config.WebSecurityConfig;
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
+import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.service.ParkingLotService;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -17,8 +19,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -42,7 +44,7 @@ public class ParkingLotControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
-    private static final String prefix = "/parkinglots";
+    private static final String prefix = "/parkinglots/";
 
     @Test
     public void should_get_204_when_add_parking_lot_successfully() throws Exception {
@@ -66,6 +68,30 @@ public class ParkingLotControllerTest {
                         new ParkingLot())).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().is(HttpStatus.SC_FORBIDDEN))
                 .andExpect(content().string(exception.getMessage()));
+    }
+
+    @Test
+    public void should_get_specefic_parkinglot_given_valid_id() throws Exception {
+        ParkingLot parkingLot = new ParkingLot();
+        when(this.parkingLotService.getParkingLotById(anyLong())).thenReturn(parkingLot);
+
+        mockMvc.perform(get(prefix + anyLong())
+        .content(mapper.writeValueAsString(parkingLot))
+        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(parkingLot)));
+    }
+
+    @Test
+    public void should_get_404_given_id_not_exists() throws Exception {
+        ResourceNotFoundException exception =
+                new ResourceNotFoundException();
+        doThrow(exception).when(this.parkingLotService).getParkingLotById(anyLong());
+
+        mockMvc.perform(get(prefix + anyLong())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(mapper.writeValueAsString(new ParkingLot())))
+                .andExpect(status().isNotFound());
     }
 
 
