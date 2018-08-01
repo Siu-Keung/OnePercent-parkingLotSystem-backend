@@ -7,6 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -40,6 +43,20 @@ public class ParkingLotRepositoryTest {
 
         assertThat(optional.isPresent(), is(true));
         assertThat(optional.get().getCoordinator().getId(), is(user.getId()));
+    }
+
+    @Test
+    public void should_get_parkinglot_paging(){
+        manager.persist(new ParkingLot());
+        manager.persist(new ParkingLot());
+        manager.persist(new ParkingLot());
+        manager.persist(new ParkingLot());
+        manager.persist(new ParkingLot());
+
+        Page<ParkingLot> parkingLots = this.repository.findAll(PageRequest.of(1, 3));
+        assertThat(parkingLots.getContent().size(), is(2));
+        assertThat(parkingLots.getContent().get(0).getId(), is(4L));
+        assertThat(parkingLots.getContent().get(1).getId(), is(5L));
     }
 
 }
