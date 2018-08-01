@@ -76,7 +76,7 @@ public class ParkingLotServiceImplTest {
         Page page = mock(Page.class);
 
         when(this.repository.findAll(any(Pageable.class))).thenReturn(page);
-        when(page.getNumber()).thenReturn(2);
+        when(page.getTotalElements()).thenReturn(2L);
         when(page.getContent()).thenReturn(list);
 
         List<ParkingLot> resultList = this.parkingLotService.getParkingLotsPaging(PageRequest.of(1, 2));

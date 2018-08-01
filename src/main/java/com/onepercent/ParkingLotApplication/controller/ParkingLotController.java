@@ -48,7 +48,7 @@ public class ParkingLotController {
             page = 1;
         if(size == null)
             size = 9;
-        return this.parkingLotService.getParkingLotsPaging(PageRequest.of(page, size));
+        return this.parkingLotService.getParkingLotsPaging(PageRequest.of(page - 1, size));
     }
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
