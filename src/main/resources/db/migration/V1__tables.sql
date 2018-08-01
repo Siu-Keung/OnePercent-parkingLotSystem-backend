@@ -6,7 +6,6 @@ password varchar(100),
 email varchar(30),
 phone  varchar(30),
 login_flag varchar(2),--能否允许系统，0代表被冻结，1代表可以登录
-delete_flag varchar(2)
 );
 
 create table role(

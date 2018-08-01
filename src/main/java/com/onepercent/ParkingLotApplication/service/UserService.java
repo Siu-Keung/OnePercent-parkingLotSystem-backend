@@ -65,7 +65,6 @@ public class UserService {
         oldUser.setEmail(user.getEmail());
         oldUser.setPhone(user.getPhone());
         oldUser.setLoginFlag(user.getLoginFlag());
-        oldUser.setDeleteFlag(user.getDeleteFlag());
         userRepository.save(oldUser);
         return oldUser;
     }
