@@ -10,8 +10,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.*;
@@ -56,6 +63,37 @@ public class ParkingLotServiceImplTest {
 
         expectedException.expect(ResourceNotFoundException.class);
         this.parkingLotService.getParkingLotById(1234L);
+    }
+
+    @Test
+    public void should_get_parkinglots_paging(){
+        List<ParkingLot> list = new ArrayList<>();
+        ParkingLot parkingLot1 = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+        parkingLot1.setId(1L);
+        parkingLot2.setId(2L);
+        list.add(parkingLot1);
+        list.add(parkingLot2);
+        Page page = mock(Page.class);
+
+        when(this.repository.findAll(any(Pageable.class))).thenReturn(page);
+        when(page.getContent()).thenReturn(list);
+
+        List<ParkingLot> resultList = this.parkingLotService.getParkingLotsPaging(PageRequest.of(1, 2));
+        assertThat(resultList.size(), is(2));
+        assertThat(resultList.get(0).getId(), is(1L));
+        assertThat(resultList.get(1).getId(), is(2L));
+    }
+
+    @Test
+    public void should_throw_exception_given_wrong_page_range(){
+        Page page = mock(Page.class);
+
+        when(this.repository.findAll(any(Pageable.class))).thenReturn(page);
+        when(page.getNumber()).thenReturn(0);
+
+        expectedException.expect(ResourceNotFoundException.class);
+        List<ParkingLot> resultList = this.parkingLotService.getParkingLotsPaging(PageRequest.of(1, 2));
     }
 
 

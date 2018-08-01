@@ -5,9 +5,12 @@ import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
 import com.onepercent.ParkingLotApplication.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,5 +32,13 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         if(!optional.isPresent())
             throw new ResourceNotFoundException();
         return optional.get();
+    }
+
+    @Override
+    public List<ParkingLot> getParkingLotsPaging(PageRequest pageRequest) throws ResourceNotFoundException {
+        Page<ParkingLot> parkingLots = this.parkingLotRepository.findAll(pageRequest);
+        if(parkingLots.getNumber() == 0)
+            throw new ResourceNotFoundException("所选页码超出范围！");
+        return parkingLots.getContent();
     }
 }
