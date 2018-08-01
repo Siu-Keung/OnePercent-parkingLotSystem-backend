@@ -79,4 +79,11 @@ public class ParkingLotServiceImpl implements ParkingLotService {
             parkingLot.setSpareSize(actualParkingLot.getSpareSize());
         this.parkingLotRepository.save(parkingLot);
     }
+
+    @Override
+    public void addParkingLot(ParkingLot parkingLot) throws OperationNotAllowedException{
+        ParkingLot result = this.parkingLotRepository.save(parkingLot);
+        if(result == null)
+            throw new OperationNotAllowedException();
+    }
 }

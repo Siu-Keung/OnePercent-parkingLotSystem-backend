@@ -16,11 +16,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -130,6 +128,20 @@ public class ParkingLotServiceImplTest {
         this.parkingLotService.updateParkingLot(mock(ParkingLot.class));
     }
 
+    @Test
+    public void should_add_parkinglot_successfully(){
+        when(this.repository.save(any())).thenReturn(mock(ParkingLot.class));
+
+        this.parkingLotService.addParkingLot(mock(ParkingLot.class));
+
+        verify(this.repository).save(any());
+    }
+
+    @Test
+    public void should_add_parkinglot_failed(){
+        expectedException.expect(OperationNotAllowedException.class);
+        this.parkingLotService.addParkingLot(mock(ParkingLot.class));
+    }
 
 
 }

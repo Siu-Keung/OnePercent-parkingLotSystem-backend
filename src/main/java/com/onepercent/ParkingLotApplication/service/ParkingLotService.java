@@ -20,6 +20,6 @@ public interface ParkingLotService {
 
     void updateParkingLot(ParkingLot parkingLot) throws ResourceNotFoundException, OperationNotAllowedException;
 
-
+    void addParkingLot(ParkingLot parkingLot) throws OperationNotAllowedException;
 
 }
