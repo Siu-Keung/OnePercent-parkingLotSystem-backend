@@ -57,17 +57,17 @@ public class UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
-//
-//    public User update(int id, User user) {
-//        User oldUser=userRepository.findById(id).get();
-//        if (oldUser==null) return null;
-//        oldUser.setName(user.getName());
-//        oldUser.setEmail(user.getEmail());
-//        oldUser.setPhone(user.getPhone());
-//        oldUser.setLoginFlag(user.getLoginFlag());
-//        oldUser.setDeleteFlag(user.getDeleteFlag());
-//        userRepository.save(oldUser);
-//        return oldUser;
-//    }
+
+    public User update(int id, User user) {
+        User oldUser=userRepository.findById(id).get();
+        if (oldUser==null) return null;
+        oldUser.setName(user.getName());
+        oldUser.setEmail(user.getEmail());
+        oldUser.setPhone(user.getPhone());
+        oldUser.setLoginFlag(user.getLoginFlag());
+        oldUser.setDeleteFlag(user.getDeleteFlag());
+        userRepository.save(oldUser);
+        return oldUser;
+    }
 
 }
