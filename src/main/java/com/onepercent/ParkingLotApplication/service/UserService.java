@@ -107,11 +107,16 @@ public class UserService {
         return oldUser;
     }
 
-    public Boolean freezeAccount(int id) {
+    public String changeAccountStatus(int id) {
         User user=userRepository.findById(id).get();
+        String status="freezing";
         if (user==null) throw new ResourceNotFoundException("用户不存在！");
-        user.setLoginFlag("0");
+        if (user.getLoginFlag().equals("1"))   user.setLoginFlag("0");
+        else {
+            user.setLoginFlag("1");
+            status="Opening";
+        }
         userRepository.save(user);
-        return true;
+        return status;
     }
 }

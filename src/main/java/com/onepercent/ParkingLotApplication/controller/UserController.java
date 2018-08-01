@@ -44,8 +44,8 @@ public class UserController {
     }
 
     @PatchMapping("/users/{id}")
-    public Boolean  freezeAccount(@PathVariable int id){
-        return userService.freezeAccount(id);
+    public String  changeAccountStatus(@PathVariable int id){
+        return userService.changeAccountStatus(id);
     }
 
 }
