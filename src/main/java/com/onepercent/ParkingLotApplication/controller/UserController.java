@@ -25,10 +25,10 @@ public class UserController {
         return userService.findAll();
     }
 
-//    @GetMapping("/users/{type}/{content}")
-//    public Optional<User> findUsers(@PathVariable String type, @PathVariable String content) {
-//        return userService.findUsers(type,content);
-//    }
+    @GetMapping("/users/{type}/{content}")
+    public Optional<User> findUsers(@PathVariable String type, @PathVariable String content) {
+        return userService.findUsers(type,content);
+    }
 //
 //    @PostMapping("/users")
 //    public User save(@RequestBody User user){

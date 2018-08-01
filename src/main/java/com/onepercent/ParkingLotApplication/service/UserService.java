@@ -26,33 +26,33 @@ public class UserService {
     }
 
 
-//    public Optional<User> findUsers(String type, String content) {
-//        Optional<User> users=Optional.empty();
-//        switch(type){
-//            case "id":{
-//                if (content!=null) {
-//                    Integer id = Integer.valueOf(content);
-//                    users=userRepository.findById(id);
-//                }
-//            }
-//            case "name":{
-//                users=userRepository.findByName(content);
-//            }
-//
-//            case "email":{
-//                users=userRepository.findByEmail(content);
-//                break;
-//            }
-//            case "phone":{
-//                users=userRepository.findByPhone(content);
-//                break;
-//            }
-//            default:
-//                break;
-//        }
-//
-//        return users;
-//    }
+    public Optional<User> findUsers(String type, String content) {
+        Optional<User> users=Optional.empty();
+        switch(type){
+            case "id":{
+                if (content!=null) {
+                    Integer id = Integer.valueOf(content);
+                    users=userRepository.findById(id);
+                }
+            }
+            case "name":{
+                users=userRepository.findByName(content);
+            }
+
+            case "email":{
+                users=userRepository.findByEmail(content);
+                break;
+            }
+            case "phone":{
+                users=userRepository.findByPhone(content);
+                break;
+            }
+            default:
+                break;
+        }
+
+        return users;
+    }
 //
 //    public User save(User user) {
 //        return userRepository.save(user);
