@@ -10,9 +10,9 @@ insert into user_role values(1,1,1);
 insert into user_role values(2,2,1);
 
 
-insert into parking_lot values(1, '停车场1', 100, 95, true, 1);
+insert into parking_lot values(1, '停车场1', 50, 45, true, 1);
 insert into parking_lot values(2, '停车场2', 100, 95, true, 1);
-insert into parking_lot values(3, '停车场3', 100, 95, true, 2);
+insert into parking_lot values(3, '停车场3', 120, 95, true, 2);
 
 
 

@@ -1,18 +1,22 @@
 package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
+import com.onepercent.ParkingLotApplication.dto.Condition;
 import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
 import com.onepercent.ParkingLotApplication.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Dylan Wei
@@ -86,4 +90,37 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         if(result == null)
             throw new OperationNotAllowedException();
     }
+
+    private List<ParkingLot> getCommonParkingLot(List<List<ParkingLot>> lists){
+        if (lists.size() == 1)
+            return lists.get(0);
+        List<ParkingLot> list = lists.get(0).stream().filter(item -> lists.get(1).contains(item)).collect(Collectors.toList());
+        List<ParkingLot> resultList = lists.get(0);
+        for(int i = 2; i < lists.size(); i++){
+            List<ParkingLot> currentList = lists.get(i);
+            list = list.stream().filter(item -> currentList.contains(item)).collect(Collectors.toList());
+        }
+        return list;
+    }
+
+    public List<ParkingLot> getParkingLotsByCondition(Condition condition){
+        List<List<ParkingLot>> resultLists = new ArrayList<>();
+        if(condition.getPhoneNumber() != null) {
+            resultLists.add(this.parkingLotRepository.findByCoordinatorPhoneNumber(condition.getPhoneNumber()));
+        }
+        if(condition.getName() != null){
+            ParkingLot probe = new ParkingLot();
+            probe.setName(condition.getName());
+            resultLists.add(this.parkingLotRepository.findAll(Example.of(probe)));
+        }
+        if(condition.getGreaterThan() != null){
+            resultLists.add(this.parkingLotRepository.findByTotalSizeGreaterThanEqual(condition.getGreaterThan()));
+        }
+        if(condition.getLessThan() != null){
+            resultLists.add(this.parkingLotRepository.findByTotalSizeLessThanEqual(condition.getLessThan()));
+        }
+        List<ParkingLot> list = getCommonParkingLot(resultLists);
+        return list;
+    }
+
 }
