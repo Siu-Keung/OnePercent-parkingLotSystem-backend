@@ -12,20 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class TestController {
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping("/")
     public String sayHello(){
         return "欢迎使用停车场管理系统！！！！！！";
-    }
-
-    @Autowired
-    private UserRepository userRepository;
-
-
-    @PreAuthorize("hasAnyAuthority('Admin', 'Manage') ")
-    @RequestMapping("/test")
-    public Object test(){
-        return userRepository.findAll();
     }
 
 }
