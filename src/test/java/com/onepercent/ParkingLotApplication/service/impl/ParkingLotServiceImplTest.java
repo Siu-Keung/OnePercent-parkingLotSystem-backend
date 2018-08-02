@@ -126,6 +126,7 @@ public class ParkingLotServiceImplTest {
 
         expectedException.expect(OperationNotAllowedException.class);
         this.parkingLotService.updateParkingLot(mock(ParkingLot.class));
+
     }
 
     @Test

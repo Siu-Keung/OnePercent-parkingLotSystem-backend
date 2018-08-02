@@ -59,4 +59,5 @@ public class ParkingLotRepositoryTest {
         assertThat(parkingLots.getContent().get(1).getId(), is(5L));
     }
 
+
 }

@@ -21,6 +21,7 @@ public class ParkingLot {
     @JoinColumn(name = "coordinator_id")
     private User coordinator;
 
+
     public ParkingLot(){
 
     }
