@@ -70,9 +70,16 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
-    public Indent changeIndentStatus(String receiptNo, String status) {
+    public Indent changeIndentStatusByReceiptNo(String receiptNo, String status) {
         Indent indent = this.indentRepository.findByReceiptNo(receiptNo);
         indent.setStatus(status);
         return this.indentRepository.saveAndFlush(indent);
+    }
+
+    @Override
+    public Indent changeIndentStatusById(Long id, String status) {
+       Indent indent = this.indentRepository.findById(id).get();
+       indent.setStatus(status);
+       return this.indentRepository.saveAndFlush(indent);
     }
 }

@@ -45,7 +45,7 @@ public class IndentController {
 
     @PutMapping("/{receiptNo}")
     public Indent unpark(@PathVariable String receiptNo){
-        return this.indentService.changeIndentStatus(
+        return this.indentService.changeIndentStatusByReceiptNo(
                 receiptNo, IndentStatus.WAITING_TO_RETRIEVE);
     }
 
@@ -57,6 +57,8 @@ public class IndentController {
                 return this.robIndent(indentId, params.getCoordinatorId());
             case "setParkingLotId":
                 return this.indentService.setParkingLotToIndent(indentId, params.getParkingLotId());
+            case "updateStatus":
+                return this.indentService.changeIndentStatusById(indentId, params.getStatus());
             default:
                 throw new IllegalCommandException();
         }

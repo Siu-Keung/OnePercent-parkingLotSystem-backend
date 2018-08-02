@@ -9,6 +9,15 @@ public class UpdateIndentParams {
     private Integer coordinatorId;
     private Long parkingLotId;
     private String receiptNo;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getReceiptNo() {
         return receiptNo;
