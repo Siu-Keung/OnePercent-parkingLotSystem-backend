@@ -1,7 +1,9 @@
 package com.onepercent.ParkingLotApplication.controller;
 
+import com.onepercent.ParkingLotApplication.domain.Indent;
 import com.onepercent.ParkingLotApplication.domain.User;
 import com.onepercent.ParkingLotApplication.dto.UserDTO;
+import com.onepercent.ParkingLotApplication.service.IndentService;
 import com.onepercent.ParkingLotApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ import java.util.Optional;
  */
 @RestController
 public class UserController {
+    @Autowired
+    private IndentService indentService;
 
     @Autowired
     private UserService userService;
@@ -46,6 +50,11 @@ public class UserController {
     @PatchMapping("/users/{id}")
     public String  changeAccountStatus(@PathVariable int id){
         return userService.changeAccountStatus(id);
+    }
+
+    @GetMapping("/users/{id}/unfinishedOrders")
+    public List<Indent> getUserUnfinishedOrders(@PathVariable Integer id){
+        return this.indentService.getAllUnfinishedIndents(id);
     }
 
 }

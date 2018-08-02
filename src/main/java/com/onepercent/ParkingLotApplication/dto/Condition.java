@@ -5,10 +5,19 @@ package com.onepercent.ParkingLotApplication.dto;
  * @date 2018-08-02 0:42
  */
 public class Condition {
+    private Integer coordinatorId;
     private String phoneNumber;
     private String name;
     private Integer lessThanEqual;
     private Integer greaterThanEqual;
+
+    public Integer getCoordinatorId() {
+        return coordinatorId;
+    }
+
+    public void setCoordinatorId(Integer coordinatorId) {
+        this.coordinatorId = coordinatorId;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -46,6 +55,7 @@ public class Condition {
         return this.phoneNumber == null &&
                 this.name == null &&
                 this.greaterThanEqual == null &&
-                this.lessThanEqual == null;
+                this.lessThanEqual == null &&
+                this.coordinatorId == null;
     }
 }

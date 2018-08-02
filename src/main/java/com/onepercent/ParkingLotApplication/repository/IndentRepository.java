@@ -2,6 +2,8 @@ package com.onepercent.ParkingLotApplication.repository;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -13,5 +15,8 @@ public interface IndentRepository extends JpaRepository<Indent, Long> {
 
     List<Indent> findByStatusEquals(String status);
 
+    @Query(nativeQuery = true, value = "select * from indent where status != 'finished' and coordinator_id = ?1")
+    List<Indent> findAllUnfinishedIndents(Integer coordinatorId);
 
+    Indent findByReceiptNo(String receiptNo);
 }

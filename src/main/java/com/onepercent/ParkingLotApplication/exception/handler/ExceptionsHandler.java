@@ -1,5 +1,6 @@
 package com.onepercent.ParkingLotApplication.exception.handler;
 
+import com.onepercent.ParkingLotApplication.exception.IllegalCommandException;
 import com.onepercent.ParkingLotApplication.exception.NoAvailableSpaceException;
 import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
@@ -32,6 +33,12 @@ public class ExceptionsHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public String handleNoAvailableSpaceException(NoAvailableSpaceException e){
+        return e.getMessage();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleIllegalCommandException(IllegalCommandException e){
         return e.getMessage();
     }
 

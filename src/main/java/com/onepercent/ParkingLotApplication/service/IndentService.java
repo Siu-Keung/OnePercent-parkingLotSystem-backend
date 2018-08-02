@@ -16,4 +16,11 @@ public interface IndentService {
 
     Indent robIndent(Long indentId, Integer coordinatorId);
 
+    List<Indent> getAllUnfinishedIndents(Integer coordinatorId);
+
+    Indent setParkingLotToIndent(Long indentId, Long parkingLotId);
+
+    Indent changeIndentStatusByReceiptNo(String receiptNo, String status);
+
+    Indent changeIndentStatusById(Long id, String status);
 }

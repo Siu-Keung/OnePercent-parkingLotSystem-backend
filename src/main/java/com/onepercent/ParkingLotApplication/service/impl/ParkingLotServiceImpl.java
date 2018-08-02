@@ -120,6 +120,9 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         if (condition.getLessThanEqual() != null) {
             resultLists.add(this.parkingLotRepository.findByTotalSizeLessThanEqual(condition.getLessThanEqual()));
         }
+        if(condition.getCoordinatorId() != null){
+            resultLists.add(this.parkingLotRepository.findByCoordinatorId(condition.getCoordinatorId()));
+        }
         List<ParkingLot> list = getCommonParkingLot(resultLists);
         int startIndex = (pagination.getPage() - 1) * pagination.getSize();
         int end = startIndex + pagination.getSize();
