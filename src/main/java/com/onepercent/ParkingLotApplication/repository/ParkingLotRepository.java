@@ -22,6 +22,8 @@ public interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
 
     List<ParkingLot> findByTotalSizeLessThanEqual(Integer num);
 
+    List<ParkingLot> findByCoordinatorId(Integer id);
+
     @Modifying
     @Query(nativeQuery = true, value = "update parking_lot set coordinator_id = ?2 where id = ?1")
     int updateCoordinatorId(Long id, Long coordinatorId);
