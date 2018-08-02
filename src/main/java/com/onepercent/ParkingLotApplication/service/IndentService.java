@@ -16,4 +16,6 @@ public interface IndentService {
 
     Indent robIndent(Long indentId, Integer coordinatorId);
 
+    List<Indent> getAllUnfinishedIndents(Integer coordinatorId);
+
 }
