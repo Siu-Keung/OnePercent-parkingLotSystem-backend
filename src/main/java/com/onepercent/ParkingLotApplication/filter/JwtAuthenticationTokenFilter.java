@@ -48,7 +48,7 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
         }
     }
 
-    private String resolveToken(HttpServletRequest request){
+    public String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader(WebSecurityConfig.AUTHORIZATION_HEADER);         //从HTTP头部获取TOKEN
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
             return bearerToken.substring(7, bearerToken.length());                              //返回Token字符串，去除Bearer

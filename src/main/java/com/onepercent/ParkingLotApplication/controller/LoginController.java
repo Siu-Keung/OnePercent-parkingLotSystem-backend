@@ -6,10 +6,12 @@ import com.onepercent.ParkingLotApplication.dto.LoginDTO;
 import com.onepercent.ParkingLotApplication.dto.TokenDTO;
 import com.onepercent.ParkingLotApplication.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -30,4 +32,10 @@ public class LoginController {
         tokenDTO.setToken("Bearer "+token);
         return   tokenDTO ;
     }
+
+    @GetMapping("/userInfo")
+    public String  checkWeb(HttpServletRequest httpServletRequest){
+        return loginService.checkUserInfo(httpServletRequest);
+    }
+
 }

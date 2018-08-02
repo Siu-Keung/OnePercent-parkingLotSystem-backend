@@ -2,6 +2,7 @@ package com.onepercent.ParkingLotApplication.service;
 
 import com.onepercent.ParkingLotApplication.domain.User;
 import com.onepercent.ParkingLotApplication.dto.LoginDTO;
+import com.onepercent.ParkingLotApplication.filter.JwtAuthenticationTokenFilter;
 import com.onepercent.ParkingLotApplication.repository.UserRepository;
 import com.onepercent.ParkingLotApplication.utils.JWTTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 @Service
@@ -55,5 +58,12 @@ public class LoginService {
         }
 
     }
+    public String  checkUserInfo(HttpServletRequest httpServletRequest) {
+        JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter=new JwtAuthenticationTokenFilter();
+        String jwt=jwtAuthenticationTokenFilter.resolveToken(httpServletRequest);
+        if (StringUtils.hasText(jwt) && this.jwtTokenUtils.validateToken(jwt)) {
+            return  "istrue";
+        }
+        return "isFalse";}
 
 }
