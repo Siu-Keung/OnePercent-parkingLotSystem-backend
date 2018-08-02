@@ -50,7 +50,7 @@ public class LoginService {
             //生成Token
             String token = jwtTokenUtils.createToken(authentication,false);
 
-            return token+" "+role;
+            return token+" "+role+" "+user.getId();
         }catch (BadCredentialsException authentication){
             throw new Exception("密码错误");
         }

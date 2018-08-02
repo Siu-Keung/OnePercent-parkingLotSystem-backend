@@ -3,8 +3,9 @@ package com.onepercent.ParkingLotApplication.dto;
 import java.io.Serializable;
 
 public class TokenDTO implements Serializable {
-    String token;
-    String role;
+    private String token;
+    private String role;
+    private String userId;
 
     public String getToken() {
         return token;
@@ -22,4 +23,11 @@ public class TokenDTO implements Serializable {
         this.role = role;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
