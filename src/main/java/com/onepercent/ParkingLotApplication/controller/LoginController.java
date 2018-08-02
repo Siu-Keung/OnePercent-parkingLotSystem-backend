@@ -26,9 +26,13 @@ public class LoginController {
         String tokenAndRole= loginService.login(loginDTO);
         String token=tokenAndRole.split(" ")[0];
         String role=tokenAndRole.split(" ")[1];
+        String id=tokenAndRole.split(" ")[2];
+        String name=tokenAndRole.split(" ")[3];
         httpResponse.addHeader(WebSecurityConfig.AUTHORIZATION_HEADER,"Bearer "+token);
         TokenDTO tokenDTO=new TokenDTO();
         tokenDTO.setRole(role);
+        tokenDTO.setUserId(id);
+        tokenDTO.setName(name);
         tokenDTO.setToken("Bearer "+token);
         return   tokenDTO ;
     }
