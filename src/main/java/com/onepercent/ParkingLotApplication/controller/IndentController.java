@@ -1,6 +1,7 @@
 package com.onepercent.ParkingLotApplication.controller;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
+import com.onepercent.ParkingLotApplication.dto.UpdateIndentParams;
 import com.onepercent.ParkingLotApplication.exception.IllegalCommandException;
 import com.onepercent.ParkingLotApplication.repository.IndentRepository;
 import com.onepercent.ParkingLotApplication.service.IndentService;
@@ -43,10 +44,12 @@ public class IndentController {
 
     @PatchMapping("/{indentId}")
     public Object updateIndent(
-            @PathVariable Long indentId, String operation, Integer coordinatorId) {
-        switch (operation) {
+            @PathVariable Long indentId, UpdateIndentParams params) {
+        switch (params.getOperation()) {
             case "robOrder":
-                return this.robIndent(indentId, coordinatorId);
+                return this.robIndent(indentId, params.getCoordinatorId());
+            case "setParkingLotId":
+                return this.indentService.setParkingLotToIndent(indentId, params.getParkingLotId());
             default:
                 throw new IllegalCommandException();
         }
@@ -55,7 +58,6 @@ public class IndentController {
     private Indent robIndent(@PathVariable Long indentId, Integer coordinatorId) {
         return this.indentService.robIndent(indentId, coordinatorId);
     }
-
 
 
 }

@@ -2,11 +2,13 @@ package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
 import com.onepercent.ParkingLotApplication.domain.IndentStatus;
+import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.domain.PendingIndentsManager;
 import com.onepercent.ParkingLotApplication.exception.NoAvailableSpaceException;
 import com.onepercent.ParkingLotApplication.repository.IndentRepository;
 import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
 import com.onepercent.ParkingLotApplication.service.IndentService;
+import com.onepercent.ParkingLotApplication.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -26,6 +28,8 @@ public class IndentServiceImpl implements IndentService {
     private IndentRepository indentRepository;
     @Autowired
     private PendingIndentsManager ordersManager;
+    @Autowired
+    private ParkingLotService parkingLotService;
 
     // TODO: 2018-08-02 此处会产生线程安全问题 
     @Override
@@ -51,5 +55,17 @@ public class IndentServiceImpl implements IndentService {
     @Override
     public List<Indent> getAllUnfinishedIndents(Integer coordinatorId) {
         return this.indentRepository.findAllUnfinishedIndents(coordinatorId);
+    }
+
+    @Override
+    public Indent setParkingLotToIndent(Long indentId, Long parkingLotId) {
+        ParkingLot parkingLot = this.parkingLotService.getParkingLotById(parkingLotId);
+        if(parkingLot.getSpareSize() <= 0)
+            throw new NoAvailableSpaceException("停车场已满！无法停车！");
+        parkingLot.setSpareSize(parkingLot.getSpareSize() - 1);
+        parkingLot = this.parkingLotRepository.saveAndFlush(parkingLot);
+        Indent indent = this.indentRepository.findById(indentId).get();
+        indent.setParkingLotId(parkingLotId);
+        return this.indentRepository.saveAndFlush(indent);
     }
 }

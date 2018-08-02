@@ -18,4 +18,6 @@ public interface IndentService {
 
     List<Indent> getAllUnfinishedIndents(Integer coordinatorId);
 
+    Indent setParkingLotToIndent(Long indentId, Long parkingLotId);
+
 }
