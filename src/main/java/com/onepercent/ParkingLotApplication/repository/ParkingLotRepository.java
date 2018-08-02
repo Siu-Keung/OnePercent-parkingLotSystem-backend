@@ -2,8 +2,11 @@ package com.onepercent.ParkingLotApplication.repository;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author Dylan Wei
@@ -11,5 +14,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
+
+    @Query(value = "select *  from parking_lot, user where parking_lot.coordinator_id = user.id and user.phone = ?1", nativeQuery = true)
+    List<ParkingLot> findByCoordinatorPhoneNumber(String phoneNumber);
+
+    List<ParkingLot> findByTotalSizeGreaterThanEqual(Integer num);
+
+    List<ParkingLot> findByTotalSizeLessThanEqual(Integer num);
 
 }
