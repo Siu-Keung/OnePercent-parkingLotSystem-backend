@@ -7,8 +7,8 @@ package com.onepercent.ParkingLotApplication.dto;
 public class Condition {
     private String phoneNumber;
     private String name;
-    private Integer lessThan;
-    private Integer greaterThan;
+    private Integer lessThanEqual;
+    private Integer greaterThanEqual;
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -26,19 +26,26 @@ public class Condition {
         this.name = name;
     }
 
-    public Integer getLessThan() {
-        return lessThan;
+    public Integer getLessThanEqual() {
+        return lessThanEqual;
     }
 
-    public void setLessThan(Integer lessThan) {
-        this.lessThan = lessThan;
+    public void setLessThanEqual(Integer lessThanEqual) {
+        this.lessThanEqual = lessThanEqual;
     }
 
-    public Integer getGreaterThan() {
-        return greaterThan;
+    public Integer getGreaterThanEqual() {
+        return greaterThanEqual;
     }
 
-    public void setGreaterThan(Integer greaterThan) {
-        this.greaterThan = greaterThan;
+    public void setGreaterThanEqual(Integer greaterThanEqual) {
+        this.greaterThanEqual = greaterThanEqual;
+    }
+
+    public boolean isEmpty(){
+        return this.phoneNumber == null &&
+                this.name == null &&
+                this.greaterThanEqual == null &&
+                this.lessThanEqual == null;
     }
 }
