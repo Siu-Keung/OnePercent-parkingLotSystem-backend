@@ -51,11 +51,14 @@ public class ParkingLotController {
         return this.parkingLotService.getParkingLotsPaging(PageRequest.of(page - 1, size));
     }
 
+    // TODO: 2018-08-02 here bug still exists that cannot update the coordinator of the parking lot; 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{id}")
     public void updateParkingLot(
+            @PathVariable Long id,
             @RequestBody ParkingLot parkingLot){
+        parkingLot.setId(id);
         this.parkingLotService.updateParkingLot(parkingLot);
     }
 

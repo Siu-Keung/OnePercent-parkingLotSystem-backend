@@ -3,6 +3,7 @@ package com.onepercent.ParkingLotApplication.repository;
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +22,9 @@ public interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
     List<ParkingLot> findByTotalSizeGreaterThanEqual(Integer num);
 
     List<ParkingLot> findByTotalSizeLessThanEqual(Integer num);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "update parking_lot set coordinator_id = ?2 where id = ?1")
+    int updateCoordinatorId(Long id, Long coordinatorId);
 
 }
