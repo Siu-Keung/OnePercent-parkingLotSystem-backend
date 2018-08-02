@@ -20,4 +20,6 @@ public interface IndentService {
 
     Indent setParkingLotToIndent(Long indentId, Long parkingLotId);
 
+    Indent changeIndentStatus(String receiptNo, String status);
+
 }

@@ -68,4 +68,11 @@ public class IndentServiceImpl implements IndentService {
         indent.setParkingLotId(parkingLotId);
         return this.indentRepository.saveAndFlush(indent);
     }
+
+    @Override
+    public Indent changeIndentStatus(String receiptNo, String status) {
+        Indent indent = this.indentRepository.findByReceiptNo(receiptNo);
+        indent.setStatus(status);
+        return this.indentRepository.saveAndFlush(indent);
+    }
 }

@@ -18,5 +18,5 @@ public interface IndentRepository extends JpaRepository<Indent, Long> {
     @Query(nativeQuery = true, value = "select * from indent where status != 'finished' and coordinator_id = ?1")
     List<Indent> findAllUnfinishedIndents(Integer coordinatorId);
 
-
+    Indent findByReceiptNo(String receiptNo);
 }

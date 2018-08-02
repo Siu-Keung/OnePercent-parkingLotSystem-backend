@@ -8,6 +8,15 @@ public class UpdateIndentParams {
     private String operation;
     private Integer coordinatorId;
     private Long parkingLotId;
+    private String receiptNo;
+
+    public String getReceiptNo() {
+        return receiptNo;
+    }
+
+    public void setReceiptNo(String receiptNo) {
+        this.receiptNo = receiptNo;
+    }
 
     public String getOperation() {
         return operation;

@@ -1,6 +1,7 @@
 package com.onepercent.ParkingLotApplication.controller;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
+import com.onepercent.ParkingLotApplication.domain.IndentStatus;
 import com.onepercent.ParkingLotApplication.dto.UpdateIndentParams;
 import com.onepercent.ParkingLotApplication.exception.IllegalCommandException;
 import com.onepercent.ParkingLotApplication.repository.IndentRepository;
@@ -42,6 +43,12 @@ public class IndentController {
         return this.indentService.getIndentsWithStatus(status);
     }
 
+    @PutMapping("/{receiptNo}")
+    public Indent unpark(@PathVariable String receiptNo){
+        return this.indentService.changeIndentStatus(
+                receiptNo, IndentStatus.WAITING_TO_RETRIEVE);
+    }
+
     @PatchMapping("/{indentId}")
     public Object updateIndent(
             @PathVariable Long indentId, UpdateIndentParams params) {
@@ -58,6 +65,7 @@ public class IndentController {
     private Indent robIndent(@PathVariable Long indentId, Integer coordinatorId) {
         return this.indentService.robIndent(indentId, coordinatorId);
     }
+
 
 
 }
