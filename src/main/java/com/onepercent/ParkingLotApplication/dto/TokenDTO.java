@@ -6,6 +6,7 @@ public class TokenDTO implements Serializable {
     private String token;
     private String role;
     private String userId;
+    private String name;
 
     public String getToken() {
         return token;
@@ -29,5 +30,13 @@ public class TokenDTO implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
