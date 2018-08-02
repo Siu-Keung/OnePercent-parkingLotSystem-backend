@@ -2,6 +2,7 @@ package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.dto.Condition;
+import com.onepercent.ParkingLotApplication.dto.Pagination;
 import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         return list;
     }
 
-    public List<ParkingLot> getParkingLotsByCondition(Condition condition){
+    public List<ParkingLot> getParkingLotsByCondition(Condition condition, Pagination pagination){
         List<List<ParkingLot>> resultLists = new ArrayList<>();
         if(condition.getPhoneNumber() != null) {
             resultLists.add(this.parkingLotRepository.findByCoordinatorPhoneNumber(condition.getPhoneNumber()));
@@ -113,14 +113,22 @@ public class ParkingLotServiceImpl implements ParkingLotService {
             probe.setName(condition.getName());
             resultLists.add(this.parkingLotRepository.findAll(Example.of(probe)));
         }
-        if(condition.getGreaterThan() != null){
-            resultLists.add(this.parkingLotRepository.findByTotalSizeGreaterThanEqual(condition.getGreaterThan()));
+        if(condition.getGreaterThanEqual() != null){
+            resultLists.add(this.parkingLotRepository.findByTotalSizeGreaterThanEqual(condition.getGreaterThanEqual()));
         }
-        if(condition.getLessThan() != null){
-            resultLists.add(this.parkingLotRepository.findByTotalSizeLessThanEqual(condition.getLessThan()));
+        if(condition.getLessThanEqual() != null){
+            resultLists.add(this.parkingLotRepository.findByTotalSizeLessThanEqual(condition.getLessThanEqual()));
         }
         List<ParkingLot> list = getCommonParkingLot(resultLists);
-        return list;
+        int startIndex = (pagination.getPage() - 1) * pagination.getSize();
+        int end = startIndex + pagination.getSize();
+        if(end >= list.size())
+            end = list.size();
+        try {
+            return list.subList(startIndex, end);
+        }catch (Exception e){
+            throw new ResourceNotFoundException();
+        }
     }
 
 }

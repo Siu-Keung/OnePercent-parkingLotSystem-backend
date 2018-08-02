@@ -2,6 +2,7 @@ package com.onepercent.ParkingLotApplication.service;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.dto.Condition;
+import com.onepercent.ParkingLotApplication.dto.Pagination;
 import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import org.springframework.data.domain.PageRequest;
@@ -23,5 +24,5 @@ public interface ParkingLotService {
 
     void addParkingLot(ParkingLot parkingLot) throws OperationNotAllowedException;
 
-    List<ParkingLot> getParkingLotsByCondition(Condition condition);
+    List<ParkingLot> getParkingLotsByCondition(Condition condition, Pagination pagination);
 }
