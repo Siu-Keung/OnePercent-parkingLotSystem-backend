@@ -1,6 +1,5 @@
 package com.onepercent.ParkingLotApplication.service;
 
-import com.onepercent.ParkingLotApplication.config.WebSecurityConfig;
 import com.onepercent.ParkingLotApplication.domain.User;
 import com.onepercent.ParkingLotApplication.dto.LoginDTO;
 import com.onepercent.ParkingLotApplication.repository.UserRepository;
@@ -50,7 +49,7 @@ public class LoginService {
             //生成Token
             String token = jwtTokenUtils.createToken(authentication,false);
 
-            return token+" "+role+" "+user.getId()+" "+user.getName();
+            return token+" "+role;
         }catch (BadCredentialsException authentication){
             throw new Exception("密码错误");
         }

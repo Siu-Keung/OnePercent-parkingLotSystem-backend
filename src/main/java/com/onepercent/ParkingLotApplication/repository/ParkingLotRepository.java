@@ -2,7 +2,6 @@ package com.onepercent.ParkingLotApplication.repository;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,5 +25,8 @@ public interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
     @Modifying
     @Query(nativeQuery = true, value = "update parking_lot set coordinator_id = ?2 where id = ?1")
     int updateCoordinatorId(Long id, Long coordinatorId);
+
+    @Query(nativeQuery = true, value = "select (sum(spare_size) - (select count(*) from indent where status = '待接单') ) from parking_lot")
+    int getSpareParkingLotCount();
 
 }

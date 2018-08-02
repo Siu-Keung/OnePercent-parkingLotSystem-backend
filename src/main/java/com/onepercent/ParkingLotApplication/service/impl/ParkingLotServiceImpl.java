@@ -2,7 +2,6 @@ package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.dto.Condition;
-import com.onepercent.ParkingLotApplication.dto.Pagination;
 import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
@@ -85,7 +84,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     }
 
     @Override
-    public void addParkingLot(ParkingLot parkingLot) throws OperationNotAllowedException{
+    public void addParkingLot(ParkingLot parkingLot) throws OperationNotAllowedException {
         ParkingLot result = this.parkingLotRepository.save(parkingLot);
         if(result == null)
             throw new OperationNotAllowedException();
@@ -103,7 +102,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         return list;
     }
 
-    public List<ParkingLot> getParkingLotsByCondition(Condition condition, Pagination pagination){
+    public List<ParkingLot> getParkingLotsByCondition(Condition condition){
         List<List<ParkingLot>> resultLists = new ArrayList<>();
         if(condition.getPhoneNumber() != null) {
             resultLists.add(this.parkingLotRepository.findByCoordinatorPhoneNumber(condition.getPhoneNumber()));
@@ -120,15 +119,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
             resultLists.add(this.parkingLotRepository.findByTotalSizeLessThanEqual(condition.getLessThanEqual()));
         }
         List<ParkingLot> list = getCommonParkingLot(resultLists);
-        int startIndex = (pagination.getPage() - 1) * pagination.getSize();
-        int end = startIndex + pagination.getSize();
-        if(end >= list.size())
-            end = list.size();
-        try {
-            return list.subList(startIndex, end);
-        }catch (Exception e){
-            throw new ResourceNotFoundException();
-        }
+        return list;
     }
 
 }
