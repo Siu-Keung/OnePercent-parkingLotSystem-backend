@@ -1,6 +1,8 @@
 package com.onepercent.ParkingLotApplication.controller;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
+import com.onepercent.ParkingLotApplication.dto.Condition;
+import com.onepercent.ParkingLotApplication.dto.Pagination;
 import com.onepercent.ParkingLotApplication.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -42,13 +44,18 @@ public class ParkingLotController {
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
     @GetMapping
     public List<ParkingLot> getParkingLotsPaging(
-            @RequestParam(required = false)Integer page,
-            @RequestParam(required = false)Integer size){
-        if(page == null)
-            page = 1;
-        if(size == null)
-            size = 9;
-        return this.parkingLotService.getParkingLotsPaging(PageRequest.of(page - 1, size));
+            Condition condition,
+            Pagination pagination){
+        if(pagination == null)
+            pagination = new Pagination(1, 9);
+        if(pagination.getPage() == null)
+            pagination.setPage(1);
+        if(pagination.getSize() == null)
+            pagination.setSize(9);
+        if(condition.isEmpty())
+            return this.parkingLotService.getParkingLotsPaging(PageRequest.of(pagination.getPage() - 1, pagination.getSize()));
+        else
+            return this.parkingLotService.getParkingLotsByCondition(condition, pagination);
     }
 
     // TODO: 2018-08-02 here bug still exists that cannot update the coordinator of the parking lot; 

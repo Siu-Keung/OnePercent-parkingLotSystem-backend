@@ -2,6 +2,7 @@ package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.dto.Condition;
+import com.onepercent.ParkingLotApplication.dto.Pagination;
 import com.onepercent.ParkingLotApplication.exception.OperationNotAllowedException;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
@@ -72,13 +73,13 @@ public class ParkingLotServiceImpl implements ParkingLotService {
                 throw new OperationNotAllowedException("该停车场不是空的，禁止注销！");
         }
         ParkingLot actualParkingLot = optional.get();
-        if(parkingLot.getName() == null)
+        if (parkingLot.getName() == null)
             parkingLot.setName(actualParkingLot.getName());
-        if(parkingLot.getAvailable() == null)
+        if (parkingLot.getAvailable() == null)
             parkingLot.setAvailable(actualParkingLot.getAvailable());
-        if(parkingLot.getTotalSize() == null)
+        if (parkingLot.getTotalSize() == null)
             parkingLot.setTotalSize(actualParkingLot.getTotalSize());
-        if(parkingLot.getSpareSize() == null)
+        if (parkingLot.getSpareSize() == null)
             parkingLot.setSpareSize(actualParkingLot.getSpareSize());
         this.parkingLotRepository.save(parkingLot);
     }
@@ -86,40 +87,49 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     @Override
     public void addParkingLot(ParkingLot parkingLot) throws OperationNotAllowedException {
         ParkingLot result = this.parkingLotRepository.save(parkingLot);
-        if(result == null)
+        if (result == null)
             throw new OperationNotAllowedException();
     }
 
-    private List<ParkingLot> getCommonParkingLot(List<List<ParkingLot>> lists){
+    private List<ParkingLot> getCommonParkingLot(List<List<ParkingLot>> lists) {
         if (lists.size() == 1)
             return lists.get(0);
         List<ParkingLot> list = lists.get(0).stream().filter(item -> lists.get(1).contains(item)).collect(Collectors.toList());
         List<ParkingLot> resultList = lists.get(0);
-        for(int i = 2; i < lists.size(); i++){
+        for (int i = 2; i < lists.size(); i++) {
             List<ParkingLot> currentList = lists.get(i);
             list = list.stream().filter(item -> currentList.contains(item)).collect(Collectors.toList());
         }
         return list;
     }
 
-    public List<ParkingLot> getParkingLotsByCondition(Condition condition){
+    @Override
+    public List<ParkingLot> getParkingLotsByCondition(Condition condition, Pagination pagination) {
         List<List<ParkingLot>> resultLists = new ArrayList<>();
-        if(condition.getPhoneNumber() != null) {
+        if (condition.getPhoneNumber() != null) {
             resultLists.add(this.parkingLotRepository.findByCoordinatorPhoneNumber(condition.getPhoneNumber()));
         }
-        if(condition.getName() != null){
+        if (condition.getName() != null) {
             ParkingLot probe = new ParkingLot();
             probe.setName(condition.getName());
             resultLists.add(this.parkingLotRepository.findAll(Example.of(probe)));
         }
-        if(condition.getGreaterThanEqual() != null){
+        if (condition.getGreaterThanEqual() != null) {
             resultLists.add(this.parkingLotRepository.findByTotalSizeGreaterThanEqual(condition.getGreaterThanEqual()));
         }
-        if(condition.getLessThanEqual() != null){
+        if (condition.getLessThanEqual() != null) {
             resultLists.add(this.parkingLotRepository.findByTotalSizeLessThanEqual(condition.getLessThanEqual()));
         }
         List<ParkingLot> list = getCommonParkingLot(resultLists);
-        return list;
+        int startIndex = (pagination.getPage() - 1) * pagination.getSize();
+        int end = startIndex + pagination.getSize();
+        if (end >= list.size())
+            end = list.size();
+        try {
+            return list.subList(startIndex, end);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException();
+        }
     }
 
 }
