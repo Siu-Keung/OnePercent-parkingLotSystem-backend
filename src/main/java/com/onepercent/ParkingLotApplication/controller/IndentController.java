@@ -58,7 +58,8 @@ public class IndentController {
     @PatchMapping("/{indentId}")
     public Object updateIndent(
             @PathVariable Long indentId,
-             UpdateIndentParams params) {
+
+            UpdateIndentParams params) {
         switch (params.getOperation()) {
             case "robOrder":
                 return this.indentService.robIndent(indentId, params.getCoordinatorId());
