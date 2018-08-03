@@ -61,11 +61,9 @@ public class UserService {
     public User save(User user) {
         Random random = new Random();
         String randomPassword="";
-        String randomloginName="";
         for (int i=0;i<6;i++)
         {
             randomPassword+=random.nextInt(10);
-            randomloginName+=random.nextInt(10);
         }
         if (user.getRoles()==null){
             Role role=new Role(3,"Employee");
@@ -74,19 +72,20 @@ public class UserService {
             user.setRoles(roles);
 
         }
-        user.setName(randomloginName);
+        user.setName(user.getName());
         user.setPassword(randomPassword);
         user.setLoginFlag("1");
         BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
         User newUser=new User();
-        newUser.setName(randomloginName);
+        newUser.setName(user.getName());
         newUser.setUserName(user.getUserName());
         newUser.setPassword(bCryptPasswordEncoder.encode(randomPassword));
         newUser.setEmail(user.getEmail());
         newUser.setPhone(user.getPhone());
         newUser.setLoginFlag(user.getLoginFlag());
         newUser.setRoles(user.getRoles());
-        userRepository.save(newUser);
+        newUser=userRepository.save(newUser);
+        user.setId(newUser.getId());
         return user;
     }
 
@@ -95,6 +94,8 @@ public class UserService {
         if (oldUser==null) throw new ResourceNotFoundException("用户不存在！");
         if (user.getName()!=null)
             oldUser.setName(user.getName());
+        if (user.getUserName()!=null)
+            oldUser.setUserName(user.getUserName());
         if(user.getEmail()!=null)
             oldUser.setEmail(user.getEmail());
         if (user.getPhone()!=null)
