@@ -7,6 +7,7 @@ import com.onepercent.ParkingLotApplication.exception.IllegalCommandException;
 import com.onepercent.ParkingLotApplication.repository.IndentRepository;
 import com.onepercent.ParkingLotApplication.service.IndentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,34 +28,40 @@ public class IndentController {
     @Autowired
     private IndentRepository indentRepository;
 
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping
     public List<Indent> getAllOrders() {
         return this.indentRepository.findAll();
     }
 
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PostMapping
     public String generateOrder(String carNo) {
         return this.indentService.generateIndent(carNo);
     }
 
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping("/{status}")
     public List<Indent> getOrders(
             @PathVariable String status) {
         return this.indentService.getIndentsWithStatus(status);
     }
 
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PutMapping("/{receiptNo}")
     public Indent unpark(@PathVariable String receiptNo){
         return this.indentService.changeIndentStatusByReceiptNo(
                 receiptNo, IndentStatus.WAITING_TO_RETRIEVE);
     }
 
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PatchMapping("/{indentId}")
     public Object updateIndent(
-            @PathVariable Long indentId, UpdateIndentParams params) {
+            @PathVariable Long indentId,
+            UpdateIndentParams params) {
         switch (params.getOperation()) {
             case "robOrder":
-                return this.robIndent(indentId, params.getCoordinatorId());
+                return this.indentService.robIndent(indentId, params.getCoordinatorId());
             case "setParkingLotId":
                 return this.indentService.setParkingLotToIndent(indentId, params.getParkingLotId());
             case "updateStatus":
@@ -64,9 +71,8 @@ public class IndentController {
         }
     }
 
-    private Indent robIndent(@PathVariable Long indentId, Integer coordinatorId) {
-        return this.indentService.robIndent(indentId, coordinatorId);
-    }
+
+
 
 
 

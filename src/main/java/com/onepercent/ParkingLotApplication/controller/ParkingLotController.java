@@ -34,14 +34,14 @@ public class ParkingLotController {
         this.parkingLotService.addParkingLot(parkingLot);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping("/{id}")
     public ParkingLot getParkingLotById(
             @PathVariable Long id){
         return this.parkingLotService.getParkingLotById(id);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping
     public List<ParkingLot> getParkingLotsPaging(
             Condition condition,
