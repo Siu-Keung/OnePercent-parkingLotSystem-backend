@@ -63,7 +63,8 @@ public class IndentController {
             case "robOrder":
                 return this.indentService.robIndent(indentId, params.getCoordinatorId());
             case "setParkingLotId":
-                return this.indentService.setParkingLotToIndent(indentId, params.getParkingLotId());
+                return this.indentService.setParkingLotToIndent(indentId,
+                        params.getParkingLotId(), params.getCoordinatorId());
             case "updateStatus":
                 return this.indentService.changeIndentStatusById(indentId, params.getStatus());
             default:
