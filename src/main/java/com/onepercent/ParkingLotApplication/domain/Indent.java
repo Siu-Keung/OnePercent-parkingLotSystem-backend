@@ -25,7 +25,7 @@ public class Indent {
     private String carNo;
     private Integer coordinatorId;
     private Long parkingLotId;
-    private String status = "待接单";
+    private String status = IndentStatus.PENDING;
 
     private Date createDate = new Date();
 
