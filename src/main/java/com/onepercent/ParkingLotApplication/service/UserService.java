@@ -2,7 +2,6 @@ package com.onepercent.ParkingLotApplication.service;
 
 import com.onepercent.ParkingLotApplication.domain.Role;
 import com.onepercent.ParkingLotApplication.domain.User;
-import com.onepercent.ParkingLotApplication.dto.SearchParkingBoysParams;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

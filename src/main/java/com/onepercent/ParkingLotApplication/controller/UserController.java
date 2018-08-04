@@ -2,7 +2,6 @@ package com.onepercent.ParkingLotApplication.controller;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
 import com.onepercent.ParkingLotApplication.domain.User;
-import com.onepercent.ParkingLotApplication.dto.SearchParkingBoysParams;
 import com.onepercent.ParkingLotApplication.dto.UserDTO;
 import com.onepercent.ParkingLotApplication.service.IndentService;
 import com.onepercent.ParkingLotApplication.service.UserService;
