@@ -120,4 +120,9 @@ public class UserService {
         userRepository.save(user);
         return status;
     }
+
+    public User findUserByAccountName(String accountName){
+        return userRepository.findByName(accountName).get();
+    }
+
 }

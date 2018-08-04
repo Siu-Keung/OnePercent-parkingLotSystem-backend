@@ -18,7 +18,7 @@ public interface IndentService {
 
     List<Indent> getAllUnfinishedIndents(Integer coordinatorId);
 
-    Indent setParkingLotToIndent(Long indentId, Long parkingLotId);
+    Indent setParkingLotToIndent(Long indentId, Long parkingLotId, Integer coordinatorId);
 
     Indent changeIndentStatusByReceiptNo(String receiptNo, String status);
 

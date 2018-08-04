@@ -49,7 +49,7 @@ public class IndentController {
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PutMapping("/{receiptNo}")
-    public Indent unpark(@PathVariable String receiptNo){
+    public Indent unpark(@PathVariable String receiptNo) {
         return this.indentService.changeIndentStatusByReceiptNo(
                 receiptNo, IndentStatus.WAITING_TO_RETRIEVE);
     }
@@ -58,22 +58,20 @@ public class IndentController {
     @PatchMapping("/{indentId}")
     public Object updateIndent(
             @PathVariable Long indentId,
-              UpdateIndentParams params) {
+            UpdateIndentParams params) {
         switch (params.getOperation()) {
             case "robOrder":
                 return this.indentService.robIndent(indentId, params.getCoordinatorId());
             case "setParkingLotId":
-                return this.indentService.setParkingLotToIndent(indentId, params.getParkingLotId());
+                return this.indentService.setParkingLotToIndent(indentId,
+                        params.getParkingLotId(), params.getCoordinatorId());
             case "updateStatus":
                 return this.indentService.changeIndentStatusById(indentId, params.getStatus());
             default:
                 throw new IllegalCommandException();
         }
+
     }
-
-
-
-
 
 
 }

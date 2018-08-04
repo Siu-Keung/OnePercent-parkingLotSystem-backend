@@ -6,6 +6,9 @@ import com.onepercent.ParkingLotApplication.dto.UserDTO;
 import com.onepercent.ParkingLotApplication.service.IndentService;
 import com.onepercent.ParkingLotApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +58,15 @@ public class UserController {
     @GetMapping("/users/{id}/unfinishedOrders")
     public List<Indent> getUserUnfinishedOrders(@PathVariable Integer id){
         return this.indentService.getAllUnfinishedIndents(id);
+    }
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+    @GetMapping("/users/currentAccountInfo")
+    public User getCurrentUserInfo(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        return this.userService.findUserByAccountName(userDetails.getUsername());
     }
 
 }

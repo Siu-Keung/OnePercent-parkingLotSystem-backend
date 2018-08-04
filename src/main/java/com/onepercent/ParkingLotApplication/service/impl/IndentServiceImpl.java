@@ -58,7 +58,7 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
-    public Indent setParkingLotToIndent(Long indentId, Long parkingLotId) {
+    public Indent setParkingLotToIndent(Long indentId, Long parkingLotId, Integer coordinatorId) {
         ParkingLot parkingLot = this.parkingLotService.getParkingLotById(parkingLotId);
         if(parkingLot.getSpareSize() <= 0)
             throw new NoAvailableSpaceException("停车场已满！无法停车！");
@@ -66,6 +66,7 @@ public class IndentServiceImpl implements IndentService {
         parkingLot = this.parkingLotRepository.saveAndFlush(parkingLot);
         Indent indent = this.indentRepository.findById(indentId).get();
         indent.setParkingLotId(parkingLotId);
+        indent.setCoordinatorId(coordinatorId);
         return this.indentRepository.saveAndFlush(indent);
     }
 
