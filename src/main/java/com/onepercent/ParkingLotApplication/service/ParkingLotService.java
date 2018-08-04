@@ -24,4 +24,6 @@ public interface ParkingLotService {
     void addParkingLot(ParkingLot parkingLot) throws OperationNotAllowedException;
 
     List<ParkingLot> getParkingLotsByCondition(Condition condition, Pagination pagination);
+
+    List<ParkingLot> getAllParkingLots();
 }
