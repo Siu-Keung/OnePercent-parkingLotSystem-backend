@@ -10,6 +10,8 @@ insert into role values(4,'Employee');
 
 insert into user_role values(1,1,1);
 insert into user_role values(2,2,1);
+insert into user_role values(3,3,3);
+insert into user_role values (4,4,3);
 
 insert into parking_lot values(1, '停车场1', 50, 0, true, 1);
 insert into parking_lot values(2, '停车场2', 100, 1, true, 1);
