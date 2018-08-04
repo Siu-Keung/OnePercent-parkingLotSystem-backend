@@ -73,4 +73,15 @@ public class UserController {
         return this.userService.findParkingBoysBy(user);
     }
 
+    @PreAuthorize(" hasAnyAuthority('ParkingBoy')")
+    @PatchMapping("/users/{id}/work")
+    boolean updateWorkStatus(@PathVariable Integer id, @RequestParam String status) {
+
+        try {
+            return userService.updateWorkStatus(id, status);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

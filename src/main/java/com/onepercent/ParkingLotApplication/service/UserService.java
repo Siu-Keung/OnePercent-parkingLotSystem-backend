@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -126,6 +128,14 @@ public class UserService {
         return userRepository.findByName(accountName).get();
     }
 
+    @Transactional
+    public boolean updateWorkStatus(Integer id,String status) throws Exception {
+        User user = userRepository.findById(id).orElseThrow(Exception::new);
+        user.setWorkStatus(status);
+        user.setWorkTime(new Date());
+        userRepository.save(user);
+        return true;
+    }
     public List<User> findAllParkingBoys() {
         return this.userRepository.findAll().stream()
                 .filter(item -> item.getRoles().stream()
