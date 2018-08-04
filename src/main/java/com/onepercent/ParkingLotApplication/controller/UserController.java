@@ -29,45 +29,49 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public List findAll() {
+    public List findAll(){
         return userService.findAll();
     }
 
     @GetMapping("/users/{type}/{content}")
     public Optional<User> findUsers(@PathVariable String type, @PathVariable String content) {
-        return userService.findUsers(type, content);
+        return userService.findUsers(type,content);
     }
 
     @PostMapping("/users")
-    public UserDTO save(@RequestBody User user) {
-        User newUser = userService.save(user);
+    public UserDTO save(@RequestBody User user){
+        User newUser=userService.save(user);
         return new UserDTO(newUser);
     }
 
     @PutMapping("/users/{id}")
-    public UserDTO update(@PathVariable int id, @RequestBody User user) {
-        User newUser = userService.update(id, user);
+    public UserDTO update(@PathVariable int id, @RequestBody User user){
+        User newUser= userService.update(id,user);
         return new UserDTO(newUser);
     }
 
     @PatchMapping("/users/{id}")
-    public String changeAccountStatus(@PathVariable int id) {
+    public String  changeAccountStatus(@PathVariable int id){
         return userService.changeAccountStatus(id);
     }
 
     @GetMapping("/users/{id}/unfinishedOrders")
-    public List<Indent> getUserUnfinishedOrders(@PathVariable Integer id) {
+    public List<Indent> getUserUnfinishedOrders(@PathVariable Integer id){
         return this.indentService.getAllUnfinishedIndents(id);
     }
-
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping("/users/currentAccountInfo")
-    public User getCurrentUserInfo() {
+    public User getCurrentUserInfo(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
 
         return this.userService.findUserByAccountName(userDetails.getUsername());
+    }
+
+    @GetMapping("/users/parkingBoys")
+    public List<User> getAllParkingBoys(User user){
+        return this.userService.findParkingBoysBy(user);
     }
 
     @PreAuthorize(" hasAnyAuthority('ParkingBoy')")
