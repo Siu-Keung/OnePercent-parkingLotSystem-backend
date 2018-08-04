@@ -21,7 +21,7 @@ insert into parking_lot values(5, '停车场5', 100, 64, true, 2);
 insert into parking_lot values(6, '停车场6', 100, 41, true, 2);
 insert into parking_lot values(7, '停车场7', 100, 18, true, 2);
 insert into parking_lot values(8, '停车场8', 100, 19, true, 2);
-insert into parking_lot values(9, '停车场9', 100, 100, true);
+
 
 
 
