@@ -2,6 +2,7 @@ package com.onepercent.ParkingLotApplication.controller;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
 import com.onepercent.ParkingLotApplication.domain.User;
+import com.onepercent.ParkingLotApplication.dto.SearchParkingBoysParams;
 import com.onepercent.ParkingLotApplication.dto.UserDTO;
 import com.onepercent.ParkingLotApplication.service.IndentService;
 import com.onepercent.ParkingLotApplication.service.UserService;
@@ -67,6 +68,11 @@ public class UserController {
                 .getPrincipal();
 
         return this.userService.findUserByAccountName(userDetails.getUsername());
+    }
+
+    @GetMapping("/users/parkingBoys")
+    public List<User> getAllParkingBoys(User user){
+        return this.userService.findParkingBoysBy(user);
     }
 
 }
