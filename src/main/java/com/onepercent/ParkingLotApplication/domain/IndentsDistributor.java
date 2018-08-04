@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2018-08-02 16:02
  */
 @Component
-public class PendingIndentsManager {
+public class IndentsDistributor {
     private final ConcurrentHashMap<Long, Indent> indentsMap = new ConcurrentHashMap<>();
 
     @Autowired
@@ -35,7 +35,7 @@ public class PendingIndentsManager {
         this.indentsMap.put(indentId, indent);
     }
 
-    public synchronized Indent grabIndent(Long indentId, Integer coordinatorId){
+    public synchronized Indent assignIndent(Long indentId, Integer coordinatorId){
 //        1.判断指定订单是否存在，不存在则抛异常
         if(!this.indentsMap.containsKey(indentId))
             throw new OperationNotAllowedException("抢单失败！");

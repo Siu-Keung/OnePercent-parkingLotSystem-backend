@@ -1,20 +1,16 @@
 package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
-import com.onepercent.ParkingLotApplication.domain.IndentStatus;
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
-import com.onepercent.ParkingLotApplication.domain.PendingIndentsManager;
+import com.onepercent.ParkingLotApplication.domain.IndentsDistributor;
 import com.onepercent.ParkingLotApplication.exception.NoAvailableSpaceException;
 import com.onepercent.ParkingLotApplication.repository.IndentRepository;
 import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
 import com.onepercent.ParkingLotApplication.service.IndentService;
 import com.onepercent.ParkingLotApplication.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.*;
 
 /**
  * @author Dylan Wei
@@ -27,7 +23,7 @@ public class IndentServiceImpl implements IndentService {
     @Autowired
     private IndentRepository indentRepository;
     @Autowired
-    private PendingIndentsManager ordersManager;
+    private IndentsDistributor ordersManager;
     @Autowired
     private ParkingLotService parkingLotService;
 
@@ -49,7 +45,7 @@ public class IndentServiceImpl implements IndentService {
 
     @Override
     public Indent robIndent(Long indentId, Integer coordinatorId) {
-        return this.ordersManager.grabIndent(indentId, coordinatorId);
+        return this.ordersManager.assignIndent(indentId, coordinatorId);
     }
 
     @Override

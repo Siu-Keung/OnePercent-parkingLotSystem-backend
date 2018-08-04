@@ -19,7 +19,7 @@ public interface ParkingLotService {
 
     List<ParkingLot> getParkingLotsPaging(PageRequest pageRequest) throws ResourceNotFoundException;
 
-    void updateParkingLot(ParkingLot parkingLot) throws ResourceNotFoundException, OperationNotAllowedException;
+    void updateParkingLot(ParkingLot parkingLot, Boolean setCoordinatorNull) throws ResourceNotFoundException, OperationNotAllowedException;
 
     void addParkingLot(ParkingLot parkingLot) throws OperationNotAllowedException;
 
