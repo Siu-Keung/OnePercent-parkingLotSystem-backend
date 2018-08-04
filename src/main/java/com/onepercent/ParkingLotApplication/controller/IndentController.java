@@ -30,7 +30,7 @@ public class IndentController {
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping
-    public List<Indent> getAllOrders() {
+    public List<Indent> getOrders(Long id, String coordinator) {
         return this.indentRepository.findAll();
     }
 
@@ -70,7 +70,6 @@ public class IndentController {
             default:
                 throw new IllegalCommandException();
         }
-
     }
 
 

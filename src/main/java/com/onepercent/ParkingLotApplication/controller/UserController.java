@@ -10,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +66,22 @@ public class UserController {
                 .getPrincipal();
 
         return this.userService.findUserByAccountName(userDetails.getUsername());
+    }
+
+    @GetMapping("/users/parkingBoys")
+    public List<User> getAllParkingBoys(User user){
+        return this.userService.findParkingBoysBy(user);
+    }
+
+    @PreAuthorize(" hasAnyAuthority('ParkingBoy')")
+    @PatchMapping("/users/{id}/work")
+    boolean updateWorkStatus(@PathVariable Integer id, @RequestParam String status) {
+
+        try {
+            return userService.updateWorkStatus(id, status);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

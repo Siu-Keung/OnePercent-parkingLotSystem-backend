@@ -5,13 +5,17 @@ import com.onepercent.ParkingLotApplication.domain.User;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Leon
@@ -31,24 +35,24 @@ public class UserService {
 
 
     public Optional<User> findUsers(String type, String content) {
-        Optional<User> users=Optional.empty();
-        switch(type){
-            case "id":{
-                if (content!=null) {
+        Optional<User> users = Optional.empty();
+        switch (type) {
+            case "id": {
+                if (content != null) {
                     Integer id = Integer.valueOf(content);
-                    users=userRepository.findById(id);
+                    users = userRepository.findById(id);
                 }
             }
-            case "userName":{
-                users=userRepository.findByUserName(content);
+            case "userName": {
+                users = userRepository.findByUserName(content);
             }
 
-            case "email":{
-                users=userRepository.findByEmail(content);
+            case "email": {
+                users = userRepository.findByEmail(content);
                 break;
             }
-            case "phone":{
-                users=userRepository.findByPhone(content);
+            case "phone": {
+                users = userRepository.findByPhone(content);
                 break;
             }
             default:
@@ -60,14 +64,13 @@ public class UserService {
 
     public User save(User user) {
         Random random = new Random();
-        String randomPassword="";
-        for (int i=0;i<6;i++)
-        {
-            randomPassword+=random.nextInt(10);
+        String randomPassword = "";
+        for (int i = 0; i < 6; i++) {
+            randomPassword += random.nextInt(10);
         }
-        if (user.getRoles()==null){
-            Role role=new Role(3,"Employee");
-            List<Role> roles=new ArrayList<>();
+        if (user.getRoles() == null) {
+            Role role = new Role(3, "Employee");
+            List<Role> roles = new ArrayList<>();
             roles.add(role);
             user.setRoles(roles);
 
@@ -75,8 +78,8 @@ public class UserService {
         user.setName(user.getName());
         user.setPassword(randomPassword);
         user.setLoginFlag("1");
-        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
-        User newUser=new User();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        User newUser = new User();
         newUser.setName(user.getName());
         newUser.setUserName(user.getUserName());
         newUser.setPassword(bCryptPasswordEncoder.encode(randomPassword));
@@ -84,45 +87,67 @@ public class UserService {
         newUser.setPhone(user.getPhone());
         newUser.setLoginFlag(user.getLoginFlag());
         newUser.setRoles(user.getRoles());
-        newUser=userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
         user.setId(newUser.getId());
         return user;
     }
 
     public User update(int id, User user) throws ResourceNotFoundException {
-        User oldUser=userRepository.findById(id).get();
-        if (oldUser==null) throw new ResourceNotFoundException("用户不存在！");
-        if (user.getName()!=null)
+        User oldUser = userRepository.findById(id).get();
+        if (oldUser == null) throw new ResourceNotFoundException("用户不存在！");
+        if (user.getName() != null)
             oldUser.setName(user.getName());
-        if (user.getUserName()!=null)
+        if (user.getUserName() != null)
             oldUser.setUserName(user.getUserName());
-        if(user.getEmail()!=null)
+        if (user.getEmail() != null)
             oldUser.setEmail(user.getEmail());
-        if (user.getPhone()!=null)
+        if (user.getPhone() != null)
             oldUser.setPhone(user.getPhone());
-        if(user.getLoginFlag()!=null)
+        if (user.getLoginFlag() != null)
             oldUser.setLoginFlag(user.getLoginFlag());
-        if(user.getRoles()!=null)
+        if (user.getRoles() != null)
             oldUser.setRoles(user.getRoles());
         userRepository.save(oldUser);
         return oldUser;
     }
 
     public String changeAccountStatus(int id) {
-        User user=userRepository.findById(id).get();
-        String status="freezing";
-        if (user==null) throw new ResourceNotFoundException("用户不存在！");
-        if (user.getLoginFlag().equals("1"))   user.setLoginFlag("0");
+        User user = userRepository.findById(id).get();
+        String status = "freezing";
+        if (user == null) throw new ResourceNotFoundException("用户不存在！");
+        if (user.getLoginFlag().equals("1")) user.setLoginFlag("0");
         else {
             user.setLoginFlag("1");
-            status="Opening";
+            status = "Opening";
         }
         userRepository.save(user);
         return status;
     }
 
-    public User findUserByAccountName(String accountName){
+    public User findUserByAccountName(String accountName) {
         return userRepository.findByName(accountName).get();
+    }
+
+    @Transactional
+    public boolean updateWorkStatus(Integer id,String status) throws Exception {
+        User user = userRepository.findById(id).orElseThrow(Exception::new);
+        user.setWorkStatus(status);
+        user.setWorkTime(new Date());
+        userRepository.save(user);
+        return true;
+    }
+    public List<User> findAllParkingBoys() {
+        return this.userRepository.findAll().stream()
+                .filter(item -> item.getRoles().stream()
+                        .filter(item2 -> item2.getName().equals("ParkingBoy")).findFirst().isPresent()).collect(Collectors.toList());
+    }
+
+    public List<User> findParkingBoysBy(User user) {
+        return this.userRepository
+                .findAll(Example.of(user)).stream().
+                        filter(item -> item.getRoles().stream().
+                                filter(item2 -> item2.getName().equals("ParkingBoy")).findFirst().isPresent()).
+                        collect(Collectors.toList());
     }
 
 }
