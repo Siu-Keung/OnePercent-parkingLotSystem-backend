@@ -46,6 +46,8 @@ public class ParkingLotController {
     public List<ParkingLot> getParkingLotsPaging(
             Condition condition,
             Pagination pagination){
+        if(condition.getFindAll() != null && condition.getFindAll() == true)
+            return this.parkingLotService.getAllParkingLots();
         if(pagination == null)
             pagination = new Pagination(1, 9);
         if(pagination.getPage() == null)

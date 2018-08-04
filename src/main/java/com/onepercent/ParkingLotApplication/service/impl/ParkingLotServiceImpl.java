@@ -135,4 +135,8 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         }
     }
 
+    @Override
+    public List<ParkingLot> getAllParkingLots() {
+        return this.parkingLotRepository.findAll();
+    }
 }

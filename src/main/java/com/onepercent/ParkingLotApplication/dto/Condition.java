@@ -10,6 +10,15 @@ public class Condition {
     private String name;
     private Integer lessThanEqual;
     private Integer greaterThanEqual;
+    private Boolean findAll;
+
+    public Boolean getFindAll() {
+        return findAll;
+    }
+
+    public void setFindAll(Boolean findAll) {
+        this.findAll = findAll;
+    }
 
     public Integer getCoordinatorId() {
         return coordinatorId;
