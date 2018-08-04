@@ -49,7 +49,7 @@ public class IndentController {
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PutMapping("/{receiptNo}")
-    public Indent unpark(@PathVariable String receiptNo){
+    public Indent unpark(@PathVariable String receiptNo) {
         return this.indentService.changeIndentStatusByReceiptNo(
                 receiptNo, IndentStatus.WAITING_TO_RETRIEVE);
     }
@@ -58,7 +58,6 @@ public class IndentController {
     @PatchMapping("/{indentId}")
     public Object updateIndent(
             @PathVariable Long indentId,
-
             UpdateIndentParams params) {
         switch (params.getOperation()) {
             case "robOrder":
@@ -73,10 +72,6 @@ public class IndentController {
         }
 
     }
-
-
-
-
 
 
 }
