@@ -13,13 +13,13 @@ insert into user_role values(2,2,1);
 insert into user_role values(3,3,3);
 insert into user_role values (4,4,3);
 
-insert into parking_lot values(1, '停车场1', 50, 0, true, 1);
-insert into parking_lot values(2, '停车场2', 100, 1, true, 1);
-insert into parking_lot values(3, '停车场3', 100, 2, true, 2);
+insert into parking_lot values(1, '停车场1', 50, 50, true, 1);
+insert into parking_lot values(2, '停车场2', 100, 45, true, 1);
+insert into parking_lot values(3, '停车场3', 100, 100, true,null );
 insert into parking_lot values(4, '停车场4', 100, 50, true, 2);
-insert into parking_lot values(5, '停车场5', 100, 64, true, 2);
-insert into parking_lot values(6, '停车场6', 100, 41, true, 2);
-insert into parking_lot values(7, '停车场7', 100, 18, true, 2);
+insert into parking_lot values(5, '停车场5', 100, 100, true, null );
+insert into parking_lot values(6, '停车场6', 100, 100, true, null );
+insert into parking_lot values(7, '停车场7', 100, 100, true, 2);
 insert into parking_lot values(8, '停车场8', 100, 19, true, 2);
 insert into parking_lot values(9, '停车场9', 100, 70, true, 2);
 insert into parking_lot values(10, '停车场10', 100, 23, true, 2);
@@ -33,9 +33,9 @@ insert into parking_lot values(17, '停车场17', 100, 46, true, 2);
 insert into parking_lot values(18, '停车场18', 100, 26, true, 2);
 insert into parking_lot values(19, '停车场19', 100, 50, true, 2);
 insert into parking_lot values(20, '停车场20', 100, 87, true, 2);
-insert into parking_lot values(21, '停车场21', 100, 46, true, 2);
-insert into parking_lot values(22, '停车场22', 100, 74, true, 2);
-insert into parking_lot values(23, '停车场23', 100, 35, true, 2);
+insert into parking_lot values(21, '停车场21', 100, 100, true, null);
+insert into parking_lot values(22, '停车场22', 100, 100, true,null );
+insert into parking_lot values(23, '停车场23', 100, 100, true, null);
 
 
 
