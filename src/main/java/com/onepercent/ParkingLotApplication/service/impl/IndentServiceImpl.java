@@ -9,6 +9,7 @@ import com.onepercent.ParkingLotApplication.repository.ParkingLotRepository;
 import com.onepercent.ParkingLotApplication.service.IndentService;
 import com.onepercent.ParkingLotApplication.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -78,5 +79,10 @@ public class IndentServiceImpl implements IndentService {
        Indent indent = this.indentRepository.findById(id).get();
        indent.setStatus(status);
        return this.indentRepository.saveAndFlush(indent);
+    }
+
+    @Override
+    public List<Indent> getIndents(Indent example) {
+        return this.indentRepository.findAll(Example.of(example));
     }
 }

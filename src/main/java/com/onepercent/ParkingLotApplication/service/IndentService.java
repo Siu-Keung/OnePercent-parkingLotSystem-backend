@@ -23,4 +23,6 @@ public interface IndentService {
     Indent changeIndentStatusByReceiptNo(String receiptNo, String status);
 
     Indent changeIndentStatusById(Long id, String status);
+
+    List<Indent> getIndents(Indent example);
 }

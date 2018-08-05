@@ -25,13 +25,18 @@ public class IndentController {
     private IndentService indentService;
 
 
-    @Autowired
-    private IndentRepository indentRepository;
+
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping
-    public List<Indent> getOrders(Long id, String coordinator) {
-        return this.indentRepository.findAll();
+    public List<Indent> getOrders(String carNo, Long id) {
+        Indent indent = new Indent();
+        indent.setCarNo(carNo);
+        indent.setId(id);
+        indent.setReceiptNo(null);
+        indent.setCreateDate(null);
+        indent.setStatus(null);
+        return this.indentService.getIndents(indent);
     }
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
