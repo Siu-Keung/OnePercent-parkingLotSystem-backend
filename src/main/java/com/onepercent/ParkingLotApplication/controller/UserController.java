@@ -4,14 +4,15 @@ import com.onepercent.ParkingLotApplication.domain.Indent;
 import com.onepercent.ParkingLotApplication.domain.User;
 import com.onepercent.ParkingLotApplication.dto.UserDTO;
 import com.onepercent.ParkingLotApplication.service.IndentService;
-import com.onepercent.ParkingLotApplication.service.UserService;
+import com.onepercent.ParkingLotApplication.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @Author: Leon
@@ -25,25 +26,29 @@ public class UserController {
     private IndentService indentService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @PreAuthorize(" hasAnyAuthority('Admin')")
     @GetMapping("/users")
-    public List findAll(){
-        return userService.findAll();
+    public List<UserDTO> findAll(){
+        List<UserDTO> usersDTO= new ArrayList<>();
+        userService.findAll().stream().forEach(user -> usersDTO.add(new UserDTO((User)user)));
+        return usersDTO;
     }
 
     @PreAuthorize(" hasAnyAuthority('Admin')")
     @GetMapping("/users/{type}/{content}")
-    public List<User> findUsers(@PathVariable String type, @PathVariable String content) {
-        return userService.findUsers(type,content);
+    public List<UserDTO> findUsers(@PathVariable String type, @PathVariable String content) {
+        List<UserDTO> usersDTO= new ArrayList<>();
+        userService.findUsers(type,content).stream()
+                .forEach(user -> usersDTO.add(new UserDTO(user)));
+        return usersDTO;
     }
 
     @PreAuthorize(" hasAnyAuthority('Admin')")
     @PostMapping("/users")
-    public UserDTO save(@RequestBody User user){
-        User newUser=userService.save(user);
-        return new UserDTO(newUser);
+    public User save(@RequestBody User user){
+        return userService.save(user);
     }
 
     @PreAuthorize(" hasAnyAuthority('Admin')")
