@@ -27,26 +27,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin','Manage','ParkingBoy')")
     @GetMapping("/users")
     public List findAll(){
         return userService.findAll();
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin','Manage')")
     @GetMapping("/users/{type}/{content}")
     public List<User> findUsers(@PathVariable String type, @PathVariable String content) {
         return userService.findUsers(type,content);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin','Manage')")
     @PostMapping("/users")
     public UserDTO save(@RequestBody User user){
         User newUser=userService.save(user);
         return new UserDTO(newUser);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin','Manage')")
     @PutMapping("/users/{id}")
     public UserDTO update(@PathVariable int id, @RequestBody User user){
         User newUser= userService.update(id,user);
@@ -59,7 +59,7 @@ public class UserController {
         return userService.changeAccountStatus(id);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin','Manage')")
     @GetMapping("/users/{id}/unfinishedOrders")
     public List<Indent> getUserUnfinishedOrders(@PathVariable Integer id){
         return this.indentService.getAllUnfinishedIndents(id);
