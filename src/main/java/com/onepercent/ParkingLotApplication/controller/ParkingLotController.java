@@ -46,6 +46,8 @@ public class ParkingLotController {
     public List<ParkingLot> getParkingLotsPaging(
             Condition condition,
             Pagination pagination){
+        if(condition.getFindAll() != null && condition.getFindAll() == true)
+            return this.parkingLotService.getAllParkingLots();
         if(pagination == null)
             pagination = new Pagination(1, 9);
         if(pagination.getPage() == null)
@@ -64,9 +66,15 @@ public class ParkingLotController {
     @PatchMapping("/{id}")
     public void updateParkingLot(
             @PathVariable Long id,
+            @RequestParam(required = false) Boolean setCoordinatorNull,
             @RequestBody ParkingLot parkingLot){
         parkingLot.setId(id);
         this.parkingLotService.updateParkingLot(parkingLot);
+    }
+
+    @PutMapping("/{id}")
+    public ParkingLot setCoordinatorNull(@PathVariable Long id, Boolean setNull){
+        return this.parkingLotService.setParkingLotNull(id, setNull);
     }
 
 }

@@ -18,9 +18,11 @@ public interface IndentService {
 
     List<Indent> getAllUnfinishedIndents(Integer coordinatorId);
 
-    Indent setParkingLotToIndent(Long indentId, Long parkingLotId);
+    Indent setParkingLotToIndent(Long indentId, Long parkingLotId, Integer coordinatorId);
 
     Indent changeIndentStatusByReceiptNo(String receiptNo, String status);
 
     Indent changeIndentStatusById(Long id, String status);
+
+    List<Indent> getIndents(Indent example);
 }

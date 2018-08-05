@@ -5,13 +5,17 @@ import com.onepercent.ParkingLotApplication.domain.User;
 import com.onepercent.ParkingLotApplication.exception.ResourceNotFoundException;
 import com.onepercent.ParkingLotApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Leon
@@ -32,11 +36,11 @@ public class UserService {
 
     public List<User> findUsers(String type, String content) {
         List<User> users=new ArrayList<>();
-        switch(type) {
-            case "id": {
-                if (content != null) {
+        switch(type){
+            case "id":{
+                if (content!=null) {
                     Integer id = Integer.valueOf(content);
-                    users = userRepository.findAllById(id);
+                    users=userRepository.findAllById(id);
                 }
                 break;
             }
@@ -50,7 +54,7 @@ public class UserService {
                 break;
             }
             case "phone": {
-                System.out.println("66666666666666666666666666666");
+
                 users = userRepository.findAllByPhone(content);
                 break;
             }
@@ -122,4 +126,31 @@ public class UserService {
         userRepository.save(user);
         return status;
     }
+
+    public User findUserByAccountName(String accountName) {
+        return userRepository.findByName(accountName).get();
+    }
+
+    @Transactional
+    public boolean updateWorkStatus(Integer id,String status) throws Exception {
+        User user = userRepository.findById(id).orElseThrow(Exception::new);
+        user.setWorkStatus(status);
+        user.setWorkTime(new Date());
+        userRepository.save(user);
+        return true;
+    }
+    public List<User> findAllParkingBoys() {
+        return this.userRepository.findAll().stream()
+                .filter(item -> item.getRoles().stream()
+                        .filter(item2 -> item2.getName().equals("ParkingBoy")).findFirst().isPresent()).collect(Collectors.toList());
+    }
+
+    public List<User> findParkingBoysBy(User user) {
+        return this.userRepository
+                .findAll(Example.of(user)).stream().
+                        filter(item -> item.getRoles().stream().
+                                filter(item2 -> item2.getName().equals("ParkingBoy")).findFirst().isPresent()).
+                        collect(Collectors.toList());
+    }
+
 }

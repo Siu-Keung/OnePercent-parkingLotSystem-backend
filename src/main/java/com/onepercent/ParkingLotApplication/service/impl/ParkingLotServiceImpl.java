@@ -81,6 +81,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
             parkingLot.setTotalSize(actualParkingLot.getTotalSize());
         if (parkingLot.getSpareSize() == null)
             parkingLot.setSpareSize(actualParkingLot.getSpareSize());
+
         this.parkingLotRepository.save(parkingLot);
     }
 
@@ -135,4 +136,18 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         }
     }
 
+    @Override
+    public List<ParkingLot> getAllParkingLots() {
+        return this.parkingLotRepository.findAll();
+    }
+
+    @Override
+    public ParkingLot setParkingLotNull(Long parkingLotId, boolean setNull) {
+        ParkingLot parkingLot = this.parkingLotRepository.findById(parkingLotId).get();
+        if(setNull){
+            parkingLot.setCoordinator(null);
+            return this.parkingLotRepository.save(parkingLot);
+        }
+        return parkingLot;
+    }
 }

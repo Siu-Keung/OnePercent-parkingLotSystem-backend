@@ -17,10 +17,6 @@ public class Indent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Indent(String carNo) {
-        this.carNo = carNo;
-    }
-
     private String receiptNo = UUID.randomUUID().toString();
     private String carNo;
     private Integer coordinatorId;
@@ -30,6 +26,10 @@ public class Indent {
     private Date createDate = new Date();
 
     public Indent() {
+    }
+
+    public Indent(String carNo) {
+        this.carNo = carNo;
     }
 
     public Long getId() {

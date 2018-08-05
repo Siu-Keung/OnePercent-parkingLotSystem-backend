@@ -7,8 +7,9 @@ import com.onepercent.ParkingLotApplication.service.IndentService;
 import com.onepercent.ParkingLotApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -26,42 +27,68 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin')")
     @GetMapping("/users")
     public List findAll(){
         return userService.findAll();
     }
 
-//    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin')")
     @GetMapping("/users/{type}/{content}")
     public List<User> findUsers(@PathVariable String type, @PathVariable String content) {
         return userService.findUsers(type,content);
     }
 
-//    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin')")
     @PostMapping("/users")
     public UserDTO save(@RequestBody User user){
         User newUser=userService.save(user);
         return new UserDTO(newUser);
     }
 
-//    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin')")
     @PutMapping("/users/{id}")
     public UserDTO update(@PathVariable int id, @RequestBody User user){
         User newUser= userService.update(id,user);
         return new UserDTO(newUser);
     }
 
-//    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin')")
     @PatchMapping("/users/{id}")
     public String  changeAccountStatus(@PathVariable int id){
         return userService.changeAccountStatus(id);
     }
 
-//    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin')")
     @GetMapping("/users/{id}/unfinishedOrders")
     public List<Indent> getUserUnfinishedOrders(@PathVariable Integer id){
         return this.indentService.getAllUnfinishedIndents(id);
+    }
+
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+    @GetMapping("/users/currentAccountInfo")
+    public User getCurrentUserInfo(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        return this.userService.findUserByAccountName(userDetails.getUsername());
+    }
+
+    @GetMapping("/users/parkingBoys")
+    public List<User> getAllParkingBoys(User user){
+        return this.userService.findParkingBoysBy(user);
+    }
+
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage','ParkingBoy')")
+    @PatchMapping("/users/{id}/work")
+    boolean updateWorkStatus(@PathVariable Integer id, @RequestParam String status) {
+
+        try {
+            return userService.updateWorkStatus(id, status);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

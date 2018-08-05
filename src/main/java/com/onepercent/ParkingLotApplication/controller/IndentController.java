@@ -25,13 +25,18 @@ public class IndentController {
     private IndentService indentService;
 
 
-    @Autowired
-    private IndentRepository indentRepository;
+
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping
-    public List<Indent> getAllOrders() {
-        return this.indentRepository.findAll();
+    public List<Indent> getOrders(String carNo, Long id) {
+        Indent indent = new Indent();
+        indent.setCarNo(carNo);
+        indent.setId(id);
+        indent.setReceiptNo(null);
+        indent.setCreateDate(null);
+        indent.setStatus(null);
+        return this.indentService.getIndents(indent);
     }
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
@@ -49,7 +54,7 @@ public class IndentController {
 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PutMapping("/{receiptNo}")
-    public Indent unpark(@PathVariable String receiptNo){
+    public Indent unpark(@PathVariable String receiptNo) {
         return this.indentService.changeIndentStatusByReceiptNo(
                 receiptNo, IndentStatus.WAITING_TO_RETRIEVE);
     }
@@ -63,17 +68,14 @@ public class IndentController {
             case "robOrder":
                 return this.indentService.robIndent(indentId, params.getCoordinatorId());
             case "setParkingLotId":
-                return this.indentService.setParkingLotToIndent(indentId, params.getParkingLotId());
+                return this.indentService.setParkingLotToIndent(indentId,
+                        params.getParkingLotId(), params.getCoordinatorId());
             case "updateStatus":
                 return this.indentService.changeIndentStatusById(indentId, params.getStatus());
             default:
                 throw new IllegalCommandException();
         }
     }
-
-
-
-
 
 
 }
