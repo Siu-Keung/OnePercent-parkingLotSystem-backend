@@ -1,7 +1,7 @@
-insert into user values(1, 'admin','admin', '$2a$10$UJW/Q1BGPctlUrLznCt/XOe/5zOL2TTpIaDxiEX.iA6fQKqc859jy','10@qq.com','110','1');
-insert into user values(2, 'admin1','admin1', '$2a$10$UJW/Q1BGPctlUrLznCt/XOe/5zOL2TTpIaDxiEX.iA6fQKqc859jy','11@qq.com','111','1');
-insert into user values(3, 'coordinator1','coordinator1', '$2a$10$UJW/Q1BGPctlUrLznCt/XOe/5zOL2TTpIaDxiEX.iA6fQKqc859jy','2000@qq.com','10086','1');
-insert into user values(4, 'coordinator2','coordinator2', '$2a$10$UJW/Q1BGPctlUrLznCt/XOe/5zOL2TTpIaDxiEX.iA6fQKqc859jy','2000@qq.com','10086','1');
+insert into user values(1, 'admin','admin', '$2a$10$UJW/Q1BGPctlUrLznCt/XOe/5zOL2TTpIaDxiEX.iA6fQKqc859jy','xwh123456@oocl.com','15903242354','1');
+insert into user values(2, 'admin1','admin1', '$2a$10$UJW/Q1BGPctlUrLznCt/XOe/5zOL2TTpIaDxiEX.iA6fQKqc859jy','leon1590432@oocl.com','13657393405','1');
+insert into user values(3, 'boy1','boy1', '$2a$10$UJW/Q1BGPctlUrLznCt/XOe/5zOL2TTpIaDxiEX.iA6fQKqc859jy','guoabby@oocl.com','18923453465','1');
+insert into user values(4, 'boy2','boy2', '$2a$10$UJW/Q1BGPctlUrLznCt/XOe/5zOL2TTpIaDxiEX.iA6fQKqc859jy','dylan@oocl.com','12398340543','1');
 
 insert into role values(1,'Admin');
 insert into role values(2,'Manager');
@@ -43,21 +43,34 @@ insert into parking_lot values(23, '停车场23', 100, 100, true, null);
 
 
 
-insert into indent(id, receipt_no, car_no, status) values(1, 'qwertu', '粤T895', 'pending');
-insert into indent(id, receipt_no, car_no, status) values(2, '14fafaa', '粤T525', 'pending');
-insert into indent(id, receipt_no, car_no, status, coordinator_id) values(3, 'fadfrtyu', '粤T295', 'accepted', 1);
-insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(4, 'qrweryu', '粤T2495', 'parked', 1, 1);
-insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(5, 'afwetyu', '粤T2325', 'waitingToRetrieve', 1, 1);
-insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(6, 'werwyu', '粤T08295', 'retrieving', 1, 1);
-insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(7, 'rwereyu', '粤T1895', 'finished', 1, 2);
+insert into indent(id, receipt_no, car_no, status) values(1, 'ita123456', '粤T8zq95', 'pending');
+insert into indent(id, receipt_no, car_no, status) values(2, 'ita123457', '粤T53425', 'pending');
+
+insert into indent(id, receipt_no, car_no, status, coordinator_id) values(3, 'ita123458', '粤T29e55', 'accepted', 1);
+
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(4, 'ita123459', '粤T276495', 'parked', 1, 1);
+
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(5, 'ita133456', '粤T232ty5', 'waitingToRetrieve', 1, 1);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(6, 'ita133556', '粤T08z5295', 'retrieving', 1, 1);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(7, 'ita132456', '粤T189j55', 'finished', 1, 2);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(8, 'ita132475', '粤T18ke95', 'finished', 2, 12);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(9, 'ita139256', '粤T18m695', 'finished', 3, 19);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(10, 'ita174456', '粤T18p395', 'finished', 3, 17);
+insert into indent(id, receipt_no, car_no, status, coordinator_id) values(11, 'ita123498', '粤T29er5', 'accepted', 3);
+insert into indent(id, receipt_no, car_no, status, coordinator_id) values(12, 'ita123328', '粤T29e3t5', 'accepted', 2);
+insert into indent(id, receipt_no, car_no, status, coordinator_id) values(13, 'ita223458', '粤A29e5m', 'accepted', 3);
+insert into indent(id, receipt_no, car_no, status, coordinator_id) values(14, 'ita193458', '粤A29eq5', 'accepted', 2);
+
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(15, 'ita323459', '粤T276495', 'parked', 1, 1);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(16, 'ita343459', '粤T27E645', 'parked', 2, 12);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(17, 'ita453459', '粤T274V95', 'parked', 3, 17);
 
 
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(18, 'ita134356', '粤T232tw5', 'waitingToRetrieve', 2, 12);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(19, 'ita903456', '粤T582ty5', 'waitingToRetrieve', 3, 17);
 
-
-
-
-
-
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(20, 'ita563556', '粤TL8z5295', 'retrieving', 2, 12);
+insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(21, 'ita783556', '粤TG8z5295', 'retrieving', 3, 17);
 
 
 
