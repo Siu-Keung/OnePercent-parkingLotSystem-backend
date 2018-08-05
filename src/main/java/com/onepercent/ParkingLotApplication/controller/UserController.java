@@ -73,7 +73,7 @@ public class UserController {
         return this.userService.findParkingBoysBy(user);
     }
 
-    @PreAuthorize(" hasAnyAuthority('ParkingBoy')")
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage','ParkingBoy')")
     @PatchMapping("/users/{id}/work")
     boolean updateWorkStatus(@PathVariable Integer id, @RequestParam String status) {
 
