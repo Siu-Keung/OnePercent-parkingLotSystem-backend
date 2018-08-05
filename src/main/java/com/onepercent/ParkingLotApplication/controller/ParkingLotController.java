@@ -60,18 +60,17 @@ public class ParkingLotController {
             return this.parkingLotService.getParkingLotsByCondition(condition, pagination);
     }
 
-    // TODO: 2018-08-02 here bug still exists that cannot update the coordinator of the parking lot; 
     @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{id}")
     public void updateParkingLot(
             @PathVariable Long id,
-            @RequestParam(required = false) Boolean setCoordinatorNull,
             @RequestBody ParkingLot parkingLot){
         parkingLot.setId(id);
         this.parkingLotService.updateParkingLot(parkingLot);
     }
 
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
     @PutMapping("/{id}")
     public ParkingLot setCoordinatorNull(@PathVariable Long id, Boolean setNull){
         return this.parkingLotService.setParkingLotNull(id, setNull);
