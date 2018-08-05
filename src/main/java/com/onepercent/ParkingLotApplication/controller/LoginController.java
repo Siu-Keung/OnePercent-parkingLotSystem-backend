@@ -31,6 +31,7 @@ public class LoginController {
         httpResponse.addHeader(WebSecurityConfig.AUTHORIZATION_HEADER,"Bearer "+token);
         TokenDTO tokenDTO=new TokenDTO();
         tokenDTO.setRole(role);
+
         tokenDTO.setUserId(id);
         tokenDTO.setName(name);
         tokenDTO.setToken("Bearer "+token);
