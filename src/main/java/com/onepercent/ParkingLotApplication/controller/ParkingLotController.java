@@ -69,7 +69,12 @@ public class ParkingLotController {
             @RequestParam(required = false) Boolean setCoordinatorNull,
             @RequestBody ParkingLot parkingLot){
         parkingLot.setId(id);
-        this.parkingLotService.updateParkingLot(parkingLot, setCoordinatorNull);
+        this.parkingLotService.updateParkingLot(parkingLot);
+    }
+
+    @PutMapping("/{id}")
+    public ParkingLot setCoordinatorNull(@PathVariable Long id, Boolean setNull){
+        return this.parkingLotService.setParkingLotNull(id, setNull);
     }
 
 }

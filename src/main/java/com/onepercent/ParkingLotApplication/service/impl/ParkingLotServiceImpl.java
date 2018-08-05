@@ -62,7 +62,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     }
 
     @Override
-    public void updateParkingLot(ParkingLot parkingLot, Boolean setCoordinatorNull) throws ResourceNotFoundException, OperationNotAllowedException {
+    public void updateParkingLot(ParkingLot parkingLot) throws ResourceNotFoundException, OperationNotAllowedException {
         Optional<ParkingLot> optional = this.parkingLotRepository.findById(parkingLot.getId());
         if (!optional.isPresent())
             throw new ResourceNotFoundException("停车场不存在！");
@@ -81,8 +81,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
             parkingLot.setTotalSize(actualParkingLot.getTotalSize());
         if (parkingLot.getSpareSize() == null)
             parkingLot.setSpareSize(actualParkingLot.getSpareSize());
-        if((setCoordinatorNull == null || setCoordinatorNull == false))
-            parkingLot.setCoordinator(actualParkingLot.getCoordinator());
+
         this.parkingLotRepository.save(parkingLot);
     }
 
@@ -140,5 +139,15 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     @Override
     public List<ParkingLot> getAllParkingLots() {
         return this.parkingLotRepository.findAll();
+    }
+
+    @Override
+    public ParkingLot setParkingLotNull(Long parkingLotId, boolean setNull) {
+        ParkingLot parkingLot = this.parkingLotRepository.findById(parkingLotId).get();
+        if(setNull){
+            parkingLot.setCoordinator(null);
+            return this.parkingLotRepository.save(parkingLot);
+        }
+        return parkingLot;
     }
 }
