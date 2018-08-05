@@ -70,6 +70,7 @@ public class ParkingLotController {
         this.parkingLotService.updateParkingLot(parkingLot);
     }
 
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
     @PutMapping("/{id}")
     public ParkingLot setCoordinatorNull(@PathVariable Long id, Boolean setNull){
         return this.parkingLotService.setParkingLotNull(id, setNull);
