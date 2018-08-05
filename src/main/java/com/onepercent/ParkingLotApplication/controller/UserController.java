@@ -59,7 +59,7 @@ public class UserController {
         return userService.changeAccountStatus(id);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin')")
+    @PreAuthorize(" hasAnyAuthority('Admin', 'Manager','ParkingBoy')")
     @GetMapping("/users/{id}/unfinishedOrders")
     public List<Indent> getUserUnfinishedOrders(@PathVariable Integer id){
         return this.indentService.getAllUnfinishedIndents(id);
