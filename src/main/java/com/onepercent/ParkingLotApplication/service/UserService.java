@@ -34,43 +34,46 @@ public class UserService {
     }
 
 
-    public Optional<User> findUsers(String type, String content) {
-        Optional<User> users = Optional.empty();
-        switch (type) {
-            case "id": {
-                if (content != null) {
+    public List<User> findUsers(String type, String content) {
+        List<User> users=new ArrayList<>();
+        switch(type){
+            case "id":{
+                if (content!=null) {
                     Integer id = Integer.valueOf(content);
-                    users = userRepository.findById(id);
+                    users=userRepository.findAllById(id);
                 }
+                break;
             }
             case "userName": {
-                users = userRepository.findByUserName(content);
+                users = userRepository.findAllByUserName(content);
+                break;
             }
 
             case "email": {
-                users = userRepository.findByEmail(content);
+                users = userRepository.findAllByEmail(content);
                 break;
             }
             case "phone": {
-                users = userRepository.findByPhone(content);
+
+                users = userRepository.findAllByPhone(content);
                 break;
             }
             default:
                 break;
         }
-
         return users;
     }
 
     public User save(User user) {
         Random random = new Random();
-        String randomPassword = "";
-        for (int i = 0; i < 6; i++) {
-            randomPassword += random.nextInt(10);
+        String randomPassword="";
+        for (int i=0;i<6;i++)
+        {
+            randomPassword+=random.nextInt(10);
         }
-        if (user.getRoles() == null) {
-            Role role = new Role(3, "Employee");
-            List<Role> roles = new ArrayList<>();
+        if (user.getRoles()==null){
+            Role role=new Role(3,"Employee");
+            List<Role> roles=new ArrayList<>();
             roles.add(role);
             user.setRoles(roles);
 
@@ -78,8 +81,8 @@ public class UserService {
         user.setName(user.getName());
         user.setPassword(randomPassword);
         user.setLoginFlag("1");
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        User newUser = new User();
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        User newUser=new User();
         newUser.setName(user.getName());
         newUser.setUserName(user.getUserName());
         newUser.setPassword(bCryptPasswordEncoder.encode(randomPassword));
@@ -87,38 +90,38 @@ public class UserService {
         newUser.setPhone(user.getPhone());
         newUser.setLoginFlag(user.getLoginFlag());
         newUser.setRoles(user.getRoles());
-        newUser = userRepository.save(newUser);
+        newUser=userRepository.save(newUser);
         user.setId(newUser.getId());
         return user;
     }
 
     public User update(int id, User user) throws ResourceNotFoundException {
-        User oldUser = userRepository.findById(id).get();
-        if (oldUser == null) throw new ResourceNotFoundException("用户不存在！");
-        if (user.getName() != null)
+        User oldUser=userRepository.findById(id).get();
+        if (oldUser==null) throw new ResourceNotFoundException("用户不存在！");
+        if (user.getName()!=null)
             oldUser.setName(user.getName());
-        if (user.getUserName() != null)
+        if (user.getUserName()!=null)
             oldUser.setUserName(user.getUserName());
-        if (user.getEmail() != null)
+        if(user.getEmail()!=null)
             oldUser.setEmail(user.getEmail());
-        if (user.getPhone() != null)
+        if (user.getPhone()!=null)
             oldUser.setPhone(user.getPhone());
-        if (user.getLoginFlag() != null)
+        if(user.getLoginFlag()!=null)
             oldUser.setLoginFlag(user.getLoginFlag());
-        if (user.getRoles() != null)
+        if(user.getRoles()!=null)
             oldUser.setRoles(user.getRoles());
         userRepository.save(oldUser);
         return oldUser;
     }
 
     public String changeAccountStatus(int id) {
-        User user = userRepository.findById(id).get();
-        String status = "freezing";
-        if (user == null) throw new ResourceNotFoundException("用户不存在！");
-        if (user.getLoginFlag().equals("1")) user.setLoginFlag("0");
+        User user=userRepository.findById(id).get();
+        String status="freezing";
+        if (user==null) throw new ResourceNotFoundException("用户不存在！");
+        if (user.getLoginFlag().equals("1"))   user.setLoginFlag("0");
         else {
             user.setLoginFlag("1");
-            status = "Opening";
+            status="Opening";
         }
         userRepository.save(user);
         return status;
