@@ -26,7 +26,7 @@ public class ParkingLotController {
         this.parkingLotService = parkingLotService;
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage') ")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage') ")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping
     public void addParkingLot(
@@ -34,14 +34,14 @@ public class ParkingLotController {
         this.parkingLotService.addParkingLot(parkingLot);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping("/{id}")
     public ParkingLot getParkingLotById(
             @PathVariable Long id){
         return this.parkingLotService.getParkingLotById(id);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping
     public List<ParkingLot> getParkingLotsPaging(
             Condition condition,
@@ -60,7 +60,7 @@ public class ParkingLotController {
             return this.parkingLotService.getParkingLotsByCondition(condition, pagination);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{id}")
     public void updateParkingLot(
@@ -70,7 +70,7 @@ public class ParkingLotController {
         this.parkingLotService.updateParkingLot(parkingLot);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage')")
     @PutMapping("/{id}")
     public ParkingLot setCoordinatorNull(@PathVariable Long id, Boolean setNull){
         return this.parkingLotService.setParkingLotNull(id, setNull);

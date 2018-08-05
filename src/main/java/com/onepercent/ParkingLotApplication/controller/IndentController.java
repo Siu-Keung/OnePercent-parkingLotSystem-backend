@@ -30,7 +30,7 @@ public class IndentController {
     private ParkingLotService parkingLotService;
 
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+//    @PreAuthorize(" hasAnyAuthority(['Admin', 'Manage', 'ParkingBoy'])")
     @GetMapping
     public Object getOrders(
             @RequestParam(required = false) String carNo,
@@ -55,27 +55,27 @@ public class IndentController {
         return resultMap;
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PostMapping
     public String generateOrder(String carNo) {
         return this.indentService.generateIndent(carNo);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @GetMapping("/{status}")
     public List<Indent> getOrders(
             @PathVariable String status) {
         return this.indentService.getIndentsWithStatus(status);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PutMapping("/{receiptNo}")
     public Indent unpark(@PathVariable String receiptNo) {
         return this.indentService.changeIndentStatusByReceiptNo(
                 receiptNo, IndentStatus.WAITING_TO_RETRIEVE);
     }
 
-    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
+//    @PreAuthorize(" hasAnyAuthority('Admin', 'Manage', 'ParkingBoy')")
     @PatchMapping("/{indentId}")
     public Object updateIndent(
             @PathVariable Long indentId,
