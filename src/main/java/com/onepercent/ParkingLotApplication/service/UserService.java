@@ -30,31 +30,33 @@ public class UserService {
     }
 
 
-    public Optional<User> findUsers(String type, String content) {
-        Optional<User> users=Optional.empty();
-        switch(type){
-            case "id":{
-                if (content!=null) {
+    public List<User> findUsers(String type, String content) {
+        List<User> users=new ArrayList<>();
+        switch(type) {
+            case "id": {
+                if (content != null) {
                     Integer id = Integer.valueOf(content);
-                    users=userRepository.findById(id);
+                    users = userRepository.findAllById(id);
                 }
-            }
-            case "userName":{
-                users=userRepository.findByUserName(content);
-            }
-
-            case "email":{
-                users=userRepository.findByEmail(content);
                 break;
             }
-            case "phone":{
-                users=userRepository.findByPhone(content);
+            case "userName": {
+                users = userRepository.findAllByUserName(content);
+                break;
+            }
+
+            case "email": {
+                users = userRepository.findAllByEmail(content);
+                break;
+            }
+            case "phone": {
+                System.out.println("66666666666666666666666666666");
+                users = userRepository.findAllByPhone(content);
                 break;
             }
             default:
                 break;
         }
-
         return users;
     }
 

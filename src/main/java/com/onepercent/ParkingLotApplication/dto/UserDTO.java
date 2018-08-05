@@ -20,16 +20,8 @@ public class UserDTO {
     private final String password;
     private final String email;
     private final String phone;
+    private final String loginFlag;
     private final List<Role> roles;//能否允许系统，0代表被冻结，1代表可以登录
-
-//    public UserDTO(User user) {
-//        this.id = user.getId();
-//        this.name = user.getName();
-//        this.userName = user.getUserName();
-//        this.email = user.getEmail();
-//        this.phone = user.getPhone();
-//        this.roles = user.getRoles();
-//    }
 
     public UserDTO(User user) {
         this.id = user.getId();
@@ -38,6 +30,7 @@ public class UserDTO {
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.phone = user.getPhone();
+        this.loginFlag=user.getLoginFlag();
         this.roles = user.getRoles();
     }
 
