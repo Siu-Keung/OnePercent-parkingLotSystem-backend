@@ -19,4 +19,5 @@ public interface IndentRepository extends JpaRepository<Indent, Long> {
     List<Indent> findAllUnfinishedIndents(Integer coordinatorId);
 
     Indent findByReceiptNo(String receiptNo);
+
 }
