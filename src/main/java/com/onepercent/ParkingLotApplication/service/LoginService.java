@@ -33,7 +33,8 @@ public class LoginService {
 
         User user=  userRepository.findByName(loginDTO.getUsername()).get();
         if(user.getLoginFlag().equals("0")){
-            return ""+" "+""+" "+""+" "+"";
+            System.out.println("1"+" "+"1"+" "+"1"+" "+"1");
+            return "1"+" "+"1"+" "+"1"+" "+"1";
         }
         String role=  user.getRoles().get(0).getName();
         //通过用户名和密码创建一个 Authentication 认证对象，实现类为 UsernamePasswordAuthenticationToken

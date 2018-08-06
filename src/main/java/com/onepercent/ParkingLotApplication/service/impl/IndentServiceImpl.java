@@ -1,6 +1,7 @@
 package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
+import com.onepercent.ParkingLotApplication.domain.IndentStatus;
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.domain.IndentsDistributor;
 import com.onepercent.ParkingLotApplication.exception.NoAvailableSpaceException;
@@ -63,6 +64,7 @@ public class IndentServiceImpl implements IndentService {
         parkingLot = this.parkingLotRepository.saveAndFlush(parkingLot);
         Indent indent = this.indentRepository.findById(indentId).get();
         indent.setParkingLotId(parkingLotId);
+        indent.setStatus(IndentStatus.PARKED);
         indent.setCoordinatorId(coordinatorId);
         return this.indentRepository.saveAndFlush(indent);
     }
