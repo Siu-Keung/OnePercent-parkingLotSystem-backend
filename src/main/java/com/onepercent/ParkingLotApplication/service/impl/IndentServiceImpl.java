@@ -1,6 +1,7 @@
 package com.onepercent.ParkingLotApplication.service.impl;
 
 import com.onepercent.ParkingLotApplication.domain.Indent;
+import com.onepercent.ParkingLotApplication.domain.IndentStatus;
 import com.onepercent.ParkingLotApplication.domain.ParkingLot;
 import com.onepercent.ParkingLotApplication.domain.IndentsDistributor;
 import com.onepercent.ParkingLotApplication.exception.NoAvailableSpaceException;
@@ -62,7 +63,7 @@ public class IndentServiceImpl implements IndentService {
         parkingLot.setSpareSize(parkingLot.getSpareSize() - 1);
         parkingLot = this.parkingLotRepository.saveAndFlush(parkingLot);
         Indent indent = this.indentRepository.findById(indentId).get();
-        // TODO: 2018-08-06 此处貌似忘记修改订单的状态为parked了 
+        indent.setStatus(IndentStatus.PARKED);
         indent.setParkingLotId(parkingLotId);
         indent.setCoordinatorId(coordinatorId);
         return this.indentRepository.saveAndFlush(indent);
