@@ -62,6 +62,7 @@ public class IndentServiceImpl implements IndentService {
         parkingLot.setSpareSize(parkingLot.getSpareSize() - 1);
         parkingLot = this.parkingLotRepository.saveAndFlush(parkingLot);
         Indent indent = this.indentRepository.findById(indentId).get();
+        // TODO: 2018-08-06 此处貌似忘记修改订单的状态为parked了 
         indent.setParkingLotId(parkingLotId);
         indent.setCoordinatorId(coordinatorId);
         return this.indentRepository.saveAndFlush(indent);

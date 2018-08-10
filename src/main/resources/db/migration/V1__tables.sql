@@ -37,3 +37,15 @@ parking_lot_id bigint,
 status varchar(20),
 create_date datetime default now()
 );
+
+create table leaving(
+id bigint auto_increment primary key,
+employee_id bigint,
+start_date datetime,
+end_date datetime,
+reason varchar(300),
+status varchar(10),
+comment varchar(300),
+create_date datetime,
+terminated int
+);
