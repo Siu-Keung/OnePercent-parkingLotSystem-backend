@@ -45,11 +45,8 @@ insert into parking_lot values(23, '停车场23', 100, 100, true, null);
 
 insert into indent(id, receipt_no, car_no, status) values(1, 'ita123456', '粤T8zq95', 'pending');
 insert into indent(id, receipt_no, car_no, status) values(2, 'ita123457', '粤T53425', 'pending');
-
 insert into indent(id, receipt_no, car_no, status, coordinator_id) values(3, 'ita123458', '粤T29e55', 'accepted', 1);
-
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(4, 'ita123459', '粤T276495', 'parked', 1, 1);
-
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(5, 'ita133456', '粤T232ty5', 'waitingToRetrieve', 1, 1);
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(6, 'ita133556', '粤T08z5295', 'retrieving', 1, 1);
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(7, 'ita132456', '粤T189j55', 'finished', 1, 2);
@@ -60,17 +57,17 @@ insert into indent(id, receipt_no, car_no, status, coordinator_id) values(11, 'i
 insert into indent(id, receipt_no, car_no, status, coordinator_id) values(12, 'ita123328', '粤T29e3t5', 'accepted', 2);
 insert into indent(id, receipt_no, car_no, status, coordinator_id) values(13, 'ita223458', '粤A29e5m', 'accepted', 3);
 insert into indent(id, receipt_no, car_no, status, coordinator_id) values(14, 'ita193458', '粤A29eq5', 'accepted', 2);
-
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(15, 'ita323459', '粤T276495', 'parked', 1, 1);
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(16, 'ita343459', '粤T27E645', 'parked', 2, 12);
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(17, 'ita453459', '粤T274V95', 'parked', 3, 17);
-
-
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(18, 'ita134356', '粤T232tw5', 'waitingToRetrieve', 2, 12);
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(19, 'ita903456', '粤T582ty5', 'waitingToRetrieve', 3, 17);
-
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(20, 'ita563556', '粤TL8z5295', 'retrieving', 2, 12);
 insert into indent(id, receipt_no, car_no, status, coordinator_id, parking_lot_id) values(21, 'ita783556', '粤TG8z5295', 'retrieving', 3, 17);
+
+insert into leaving(id, employee_id, start_date, end_date, reason, status, comment, create_date) values(1, 3, now(), now(), '生病了', 'pending', '', now());
+insert into leaving(id, employee_id, start_date, end_date, reason, status, comment, create_date) values(2, 3, now(), now(), '喝喜酒', 'approval', '同意请假', now());
+insert into leaving(id, employee_id, start_date, end_date, reason, status, comment, create_date) values(3, 3, now(), now(), '喝喜酒', 'rejected', '拒绝', now());
 
 
 
